@@ -1,6 +1,8 @@
 #include "kwee/systems/PhysicEngine.h"
 #include "kwee/game_primitives/GameObject.h"
 
+#include <algorithm>
+
 std::vector<kwee::Collider*> kwee::PhysicEngine::colliders_ = std::vector<kwee::Collider*>();
 std::vector<int>  kwee::PhysicEngine::requiedToRemoveCollidersIds_ = std::vector<int>();
 
@@ -26,7 +28,8 @@ void kwee::PhysicEngine::update()
 	{
 		for (int j = i + 1; j < colliders_.size(); j++)
 		{
-			if (checkCollisions(colliders_[i], colliders_[j]) || checkCollisions(colliders_[j], colliders_[i]))
+			//if (checkCollisionsSimple(colliders_[i], colliders_[j]) || checkCollisionsSimple(colliders_[j], colliders_[i]))
+			if (checkCollisions(colliders_[i], colliders_[j]))
 			{
 				if (colliders_[i]->lastUpdateHaveCollision == false)
 				{
@@ -57,36 +60,6 @@ void kwee::PhysicEngine::update()
 	removeRequiedObjects();
 }
 
-bool kwee::PhysicEngine::checkCollisions(Collider* c1, Collider* c2)
-{
-	Rect rect;
-	glm::mat4 tr = c1->owner_->getTransformMatrix();
-	rect.v11 = tr * glm::vec4(c1->vertices_[0], c1->vertices_[1], 0.0f, 1.0f);
-	rect.v12 = tr * glm::vec4(c1->vertices_[2], c1->vertices_[3], 0.0f, 1.0f);
-	rect.v21 = tr * glm::vec4(c1->vertices_[4], c1->vertices_[5], 0.0f, 1.0f);
-	rect.v22 = tr * glm::vec4(c1->vertices_[6], c1->vertices_[7], 0.0f, 1.0f);
-
-	tr = c2->owner_->getTransformMatrix();
-	glm::vec2 v11 = tr * glm::vec4(c2->vertices_[0], c2->vertices_[1], 0.0f, 1.0f);
-	glm::vec2 v12 = tr * glm::vec4(c2->vertices_[2], c2->vertices_[3], 0.0f, 1.0f);
-	glm::vec2 v21 = tr * glm::vec4(c2->vertices_[4], c2->vertices_[5], 0.0f, 1.0f);
-	glm::vec2 v22 = tr * glm::vec4(c2->vertices_[6], c2->vertices_[7], 0.0f, 1.0f);
-
-	if (isPointInRect(v11, rect)) return true;
-	if (isPointInRect(v12, rect)) return true;
-	if (isPointInRect(v21, rect)) return true;
-	if (isPointInRect(v22, rect)) return true;
-
-	return false;
-}
-
-bool kwee::PhysicEngine::isPointInRect(glm::vec2 point, Rect rect)
-{
-	if ((point.x <= rect.v11.x && point.x >= rect.v21.x) &&
-		(point.y <= rect.v11.y && point.y >= rect.v21.y)) return true;
-	return false;
-}
-
 void kwee::PhysicEngine::removeRequiedObjects()
 {
 	for (int i = 0; i < requiedToRemoveCollidersIds_.size(); i++)
@@ -104,4 +77,67 @@ void kwee::PhysicEngine::removeRequiedObjects()
 	}
 
 	requiedToRemoveCollidersIds_ = std::vector<int>();
+}
+
+bool kwee::PhysicEngine::checkCollisions(Collider* c1, Collider* c2)
+{
+	Rect c1Rect;
+	glm::mat4 tr = c1->owner_->getTransformMatrix();
+	c1Rect.v11 = tr * glm::vec4(c1->vertices_[0], c1->vertices_[1], 0.0f, 1.0f);
+	c1Rect.v12 = tr * glm::vec4(c1->vertices_[2], c1->vertices_[3], 0.0f, 1.0f);
+	c1Rect.v21 = tr * glm::vec4(c1->vertices_[4], c1->vertices_[5], 0.0f, 1.0f);
+	c1Rect.v22 = tr * glm::vec4(c1->vertices_[6], c1->vertices_[7], 0.0f, 1.0f);
+
+	Rect c2Rect;
+	tr = c2->owner_->getTransformMatrix();
+	c2Rect.v11 = tr * glm::vec4(c2->vertices_[0], c2->vertices_[1], 0.0f, 1.0f);
+	c2Rect.v12 = tr * glm::vec4(c2->vertices_[2], c2->vertices_[3], 0.0f, 1.0f);
+	c2Rect.v21 = tr * glm::vec4(c2->vertices_[4], c2->vertices_[5], 0.0f, 1.0f);
+	c2Rect.v22 = tr * glm::vec4(c2->vertices_[6], c2->vertices_[7], 0.0f, 1.0f);
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (cross(c1Rect[i].x, c1Rect[i].y, c1Rect[i + 1].x, c1Rect[i + 1].y, c2Rect[j].x, c2Rect[j].y, c2Rect[j + 1].x, c2Rect[j + 1].y))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+bool kwee::PhysicEngine::cross(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) 
+{
+	glm::vec2 dot;
+	float n;
+	if (y2 - y1 != 0) 
+	{
+		float q = (x2 - x1) / (y1 - y2);
+		float sn = (x3 - x4) + (y3 - y4) * q; 
+		if (!sn) return 0;
+		float fn = (x3 - x1) + (y3 - y1) * q;
+		n = fn / sn;
+	}
+	else 
+	{
+		if (!(y3 - y4)) return false;
+		n = (y3 - y1) / (y3 - y4);
+	}
+
+	dot.x = x3 + (x4 - x3) * n;
+	dot.y = y3 + (y4 - y3) * n;
+
+	if (((dot.x >= std::min(x1, x2) && dot.x <= std::max(x1, x2)) &&
+		 (dot.y >= std::min(y1, y2) && dot.y <= std::max(y1, y2))) &&
+		((dot.x >= std::min(x3, x4) && dot.x <= std::max(x3, x4)) &&
+		 (dot.y >= std::min(y3, y4) && dot.y <= std::max(y3, y4))))		return true;
+
+	if ((dot.x - x1) * (y2 - y1) - (x2 - x1) * (dot.y - y1) == 0 ||
+		(dot.x - x3) * (y4 - y2) - (x4 - x2) * (dot.y - y2) == 0
+		);// return true;
+
+	return false;
 }

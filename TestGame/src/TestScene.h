@@ -24,6 +24,7 @@ public:
 		PlayerController::controlled[0]->setPosition(glm::vec2(2, 0));
 		PlayerController::controlled[0]->setScale(glm::vec2(2, 1));
 		PlayerController::controlled[1]->setScale(glm::vec2(1, 3));
+		PlayerController::controlled[0]->colliderIsDrawing = true;
 		PlayerController::controlled[1]->colliderIsDrawing = true;
 
 		addObject(PlayerController::controlled[0]);

@@ -4,6 +4,8 @@
 #include "PlayerController.h"
 
 #include <kwee/kwee.h>
+#include <kwee/systems/PhysicEngine.h>
+#include <iostream>
 
 using kwee::Input;
 
@@ -20,6 +22,7 @@ public:
 		kwee::ResourceManager::loadShader("res/shaders/test_v.glsl", "res/shaders/test_f.glsl", "testShader");
 		scene = new TestScene;
 		loadScene(scene);
+		std::cout << kwee::PhysicEngine::cross(0, 0, 0, 2, 1, 0, 1, 2) << std::endl;
 	}
 
 	~TestGame()

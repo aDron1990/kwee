@@ -22,7 +22,7 @@ void PlayerController::update()
 			if (kwee::Input::getKey('D')) pos.x += cubeSpeed;
 			if (kwee::Input::getKey('A')) pos.x -= cubeSpeed;
 
-			if (kwee::Input::getKey('Q')) angle += 0.05;
+			if (kwee::Input::getKey('Q')) angle += 0.5;
 			if (kwee::Input::getKey('E')) angle -= 0.5;
 
 			controlled[i]->setPosition(pos);

@@ -15,9 +15,37 @@ namespace kwee
 		glm::vec2 v21 = glm::vec2(0.0f);
 		glm::vec2 v22 = glm::vec2(0.0f);
 
+		glm::vec2& operator[](int i)
+		{
+			switch (i)
+			{
+			case 0:
+				return v11;
+			case 1:
+				return v12;
+			case 2:
+				return v21;
+			case 3:
+				return v22;
+			case 4:
+				return v11;
+			default:
+				throw;
+			}
+		}
+
+	};
+	
+	class LineSegment
+	{
+	public:
+
+		glm::vec2 p1;
+		glm::vec2 p2;
+
 	};
 
-	class PhysicEngine
+	class KWEEAPI PhysicEngine
 	{
 	private:
 
@@ -33,7 +61,7 @@ namespace kwee
 
 		static void update();
 		static bool checkCollisions(Collider* c1, Collider* c2);
-		static bool isPointInRect(glm::vec2 point, Rect rect);
+		static bool cross(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
 
 	};
 }

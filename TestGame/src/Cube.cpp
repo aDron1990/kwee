@@ -13,6 +13,7 @@ void Cube::onCollisionEnter(kwee::Collider* other)
 	if (controlled)
 	{
 		controlled = false;
+		std::cout << "collision" << std::endl;
 	}
 	else
 	{
