@@ -1,0 +1,16 @@
+#pragma once
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include "kwee/core/api.h"
+#include "kwee/core/EntryPoint.h"
+
+#include "kwee/systems/Application.h"
+#include "kwee/systems/Input.h"
+#include "kwee/systems/ResourceManager.h"
+
+#include "kwee/game_primitives/Scene.h"
+#include "kwee/game_primitives/GameObject.h"
+#include "kwee/game_primitives/Camera.h"
+#include "kwee/game_primitives/Transformable.h"
