@@ -54,7 +54,12 @@ namespace kwee
 
 		static void removeRequiedObjects();
 
+		static long long lastUpdateTime;
+		static long long freq;
+
 	public:
+
+		static void initialize();
 
 		static void addCollider(Collider* c);
 		static void removeCollider(Collider* c);
@@ -62,6 +67,8 @@ namespace kwee
 		static void update();
 		static bool checkCollisions(Collider* c1, Collider* c2);
 		static bool cross(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
+
+		static int getDelta();
 
 	};
 }
