@@ -70,3 +70,8 @@ void kwee::Application::render()
 	glClearColor(0.1, 0.2, 0.15, 1.0);
 	if (activeScene_ != 0) activeScene_->draw();
 }
+
+kwee::Scene* kwee::Application::getScene()
+{
+	return activeScene_;
+}

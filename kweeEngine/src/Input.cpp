@@ -49,6 +49,8 @@ void kwee::Input::update()
 {
 	memset(key_up, 0, sizeof(key_up));
 	memset(key_down, 0, sizeof(key_down));
+	memset(m_button_up, 0, sizeof(m_button_up));
+	memset(m_button_down, 0, sizeof(m_button_down));
 }
 
 void kwee::Input::setKey(int code, bool action)

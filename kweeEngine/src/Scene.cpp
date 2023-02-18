@@ -51,3 +51,8 @@ void kwee::Scene::removeObject(GameObject* object)
 		}
 	}
 }
+
+kwee::Camera* kwee::Scene::getCamera()
+{
+	return mainCamera_;
+}

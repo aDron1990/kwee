@@ -9,7 +9,7 @@
 
 
 Cube* PlayerController::controlled[2] = {0, 0};
-float PlayerController::cubeSpeed = 0.005f;
+float PlayerController::cubeSpeed = 0.001f;
 
 void PlayerController::update()
 {
@@ -26,8 +26,8 @@ void PlayerController::update()
 			if (kwee::Input::getKey('D')) pos.x += (float)cubeSpeed * kwee::PhysicEngine::getDelta();
 			if (kwee::Input::getKey('A')) pos.x -= (float)cubeSpeed * kwee::PhysicEngine::getDelta();
 
-			if (kwee::Input::getKey('Q')) angle += (float)0.2 * kwee::PhysicEngine::getDelta();
-			if (kwee::Input::getKey('E')) angle -= (float)0.2 * kwee::PhysicEngine::getDelta();
+			if (kwee::Input::getKey('Q')) angle += (float)0.05 * kwee::PhysicEngine::getDelta();
+			if (kwee::Input::getKey('E')) angle -= (float)0.05 * kwee::PhysicEngine::getDelta();
 
 			controlled[i]->setPosition(pos);
 			controlled[i]->setRotation(angle);

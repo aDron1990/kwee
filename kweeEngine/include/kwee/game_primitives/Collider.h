@@ -16,6 +16,8 @@ namespace kwee
 	private:
 		
 		bool lastUpdateHaveCollision = false;
+		bool lastUpdateHaveMouseHover = false;
+		bool collisionSupport_, mouseSupport_;
 
 	protected:
 
@@ -34,9 +36,13 @@ namespace kwee
 		virtual void draw();
 
 		GameObject* getOwner();
+
 		void onCollision(Collider* other);
 		void onCollisionEnter(Collider* other);
 		void onCollisionExit(Collider* other);
 
+		void onMouseHover();
+		void onMouseHoverEnter();
+		void onMouseHoverExit();
 	};
 }

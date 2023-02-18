@@ -41,10 +41,15 @@ namespace kwee
 		virtual void onCollisionEnter(Collider* other) {};
 		virtual void onCollisionExit(Collider* other) {};
 
+		virtual void onMouseHover() {};
+		virtual void onMouseHoverEnter() {};
+		virtual void onMouseHoverExit() {};
+
 		GameObject(kwee::Color color);
 //		GameObject(kwee::Texture texture);
 
 		void setOwnerScene(Scene* owner);
+		Scene* getOwnerScene();
 //		Mesh getMesh();
 
 		void draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);

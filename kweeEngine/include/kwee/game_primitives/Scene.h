@@ -28,5 +28,7 @@ namespace kwee
 
 		void addObject(GameObject* object);
 		void removeObject(GameObject* object);
+
+		Camera* getCamera();
 	};
 }

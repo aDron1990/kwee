@@ -18,14 +18,12 @@ public:
 		PlayerController::controlled[0] = new Cube(true);
 		PlayerController::controlled[1] = new Cube(false);
 
-		PlayerController::controlled[0]->createCollider(1, 0);
-		PlayerController::controlled[1]->createCollider(1, 0);
+		PlayerController::controlled[0]->createCollider(1, 1);
+		PlayerController::controlled[1]->createCollider(1, 1);
 
-		PlayerController::controlled[0]->setPosition(glm::vec2(2, 0));
+		PlayerController::controlled[0]->setPosition(glm::vec2(3, 0));
 		PlayerController::controlled[0]->setScale(glm::vec2(2, 1));
-		PlayerController::controlled[1]->setScale(glm::vec2(1, 3));
-		PlayerController::controlled[0]->colliderIsDrawing = true;
-		PlayerController::controlled[1]->colliderIsDrawing = true;
+		PlayerController::controlled[1]->setScale(glm::vec2(3, 1));
 
 		addObject(PlayerController::controlled[0]);
 		addObject(PlayerController::controlled[1]);

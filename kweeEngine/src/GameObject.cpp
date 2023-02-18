@@ -19,6 +19,11 @@ void kwee::GameObject::setOwnerScene(Scene* owner)
 	owner_ = owner;
 }
 
+kwee::Scene* kwee::GameObject::getOwnerScene()
+{
+	return owner_;
+}
+
 void kwee::GameObject::draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
 	shader_->use();

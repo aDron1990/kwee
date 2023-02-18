@@ -1,14 +1,18 @@
 #include "kwee/systems/PhysicEngine.h"
+#include "kwee/systems/Input.h"
+#include "kwee/systems/Application.h"
 #include "kwee/game_primitives/GameObject.h"
 
 #include <ctime>
 #include <algorithm>
 #include <Windows.h>
 #include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
 
 std::vector<kwee::Collider*> kwee::PhysicEngine::colliders_ = std::vector<kwee::Collider*>();
 std::vector<int>  kwee::PhysicEngine::requiedToRemoveCollidersIds_ = std::vector<int>();
 long long kwee::PhysicEngine::lastUpdateTime = 0;
+long long kwee::PhysicEngine::delta = 0;
 long long kwee::PhysicEngine::freq = 0;
 
 void kwee::PhysicEngine::initialize()
@@ -43,34 +47,80 @@ void kwee::PhysicEngine::update()
 	LARGE_INTEGER time;
 	QueryPerformanceCounter(&time);
 	
+	delta = (time.QuadPart / (freq / 10000) - lastUpdateTime / (freq / 10000)) + 1;
+	lastUpdateTime = time.QuadPart / (freq / 10000);
+
+	glm::vec2 mousePos = Application::getInstance()->getScene()->getCamera()->ScreenToWorld(Input::getMousePosition());
+//	glm::vec2 mousePos = { 0.6, 0.6 };
+
 	for (int i = 0; i < colliders_.size(); i++)
 	{
-		for (int j = i + 1; j < colliders_.size(); j++)
+		if (colliders_[i]->mouseSupport_)
 		{
-			//if (checkCollisionsSimple(colliders_[i], colliders_[j]) || checkCollisionsSimple(colliders_[j], colliders_[i]))
-			if (checkCollisions(colliders_[i], colliders_[j]))
+			Collider* c1 = colliders_[i];
+			Rect rect;
+			glm::mat4 tr = c1->owner_->getTransformMatrix();
+
+			rect.v11 = tr * glm::vec4(c1->vertices_[0], c1->vertices_[1], 0.0f, 1.0f);
+			rect.v12 = tr * glm::vec4(c1->vertices_[2], c1->vertices_[3], 0.0f, 1.0f);
+			rect.v21 = tr * glm::vec4(c1->vertices_[4], c1->vertices_[5], 0.0f, 1.0f);
+			rect.v22 = tr * glm::vec4(c1->vertices_[6], c1->vertices_[7], 0.0f, 1.0f);
+
+			float
+				p1 = product(mousePos.x, mousePos.y, rect[0].x, rect[0].y, rect[1].x, rect[1].y),
+				p2 = product(mousePos.x, mousePos.y, rect[1].x, rect[1].y, rect[2].x, rect[2].y),
+				p3 = product(mousePos.x, mousePos.y, rect[2].x, rect[2].y, rect[3].x, rect[3].y),
+				p4 = product(mousePos.x, mousePos.y, rect[3].x, rect[3].y, rect[0].x, rect[0].y);
+
+			if ((p1 < 0 && p2 < 0 && p3 < 0 && p4 < 0) ||
+				(p1 > 0 && p2 > 0 && p3 > 0 && p4 > 0))
 			{
-				if (colliders_[i]->lastUpdateHaveCollision == false)
+				if (colliders_[i]->lastUpdateHaveMouseHover == false)
 				{
-					colliders_[i]->onCollisionEnter(colliders_[j]);
-					colliders_[j]->onCollisionEnter(colliders_[i]);
+					colliders_[i]->onMouseHoverEnter();
 				}
 
-				colliders_[i]->onCollision(colliders_[j]);
-				colliders_[j]->onCollision(colliders_[i]);
-
-				colliders_[i]->lastUpdateHaveCollision = true;
-				colliders_[j]->lastUpdateHaveCollision = true;
+				colliders_[i]->onMouseHover();
+				colliders_[i]->lastUpdateHaveMouseHover = true;
 			}
 			else
 			{
-				if (colliders_[i]->lastUpdateHaveCollision == true)
+				if (colliders_[i]->lastUpdateHaveMouseHover == true)
 				{
-					colliders_[i]->onCollisionExit(colliders_[j]);
-					colliders_[j]->onCollisionExit(colliders_[i]);
+					colliders_[i]->onMouseHoverExit();
+					colliders_[i]->lastUpdateHaveMouseHover = false;
+				}
+			}
+		}
 
-					colliders_[i]->lastUpdateHaveCollision = false;
-					colliders_[j]->lastUpdateHaveCollision = false;
+		for (int j = i + 1; j < colliders_.size(); j++)
+		{
+			if (colliders_[i]->collisionSupport_ || colliders_[j]->collisionSupport_)
+			{
+				if (checkCollisions(colliders_[i], colliders_[j]))
+				{
+					if (colliders_[i]->lastUpdateHaveCollision == false)
+					{
+						if (colliders_[i]->collisionSupport_) colliders_[i]->onCollisionEnter(colliders_[j]);
+						if (colliders_[j]->collisionSupport_) colliders_[j]->onCollisionEnter(colliders_[i]);
+					}
+
+					if (colliders_[i]->collisionSupport_) colliders_[i]->onCollision(colliders_[j]);
+					if (colliders_[j]->collisionSupport_) colliders_[j]->onCollision(colliders_[i]);
+
+					colliders_[i]->lastUpdateHaveCollision = true;
+					colliders_[j]->lastUpdateHaveCollision = true;
+				}
+				else
+				{
+					if (colliders_[i]->lastUpdateHaveCollision == true)
+					{
+						if (colliders_[i]->collisionSupport_) colliders_[i]->onCollisionExit(colliders_[j]);
+						if (colliders_[j]->collisionSupport_) colliders_[j]->onCollisionExit(colliders_[i]);
+
+						colliders_[i]->lastUpdateHaveCollision = false;
+						colliders_[j]->lastUpdateHaveCollision = false;
+					}
 				}
 			}
 		}
@@ -157,9 +207,14 @@ bool kwee::PhysicEngine::cross(float x1, float y1, float x2, float y2, float x3,
 	return false;
 }
 
+float kwee::PhysicEngine::product(float Px, float Py, float Ax, float Ay, float Bx, float By)
+{
+	return (Bx - Ax) * (Py - Ay) - (By - Ay) * (Px - Ax);
+}
+
 int kwee::PhysicEngine::getDelta()
 {
 	LARGE_INTEGER time;
 	QueryPerformanceCounter(&time);
-	return (time.QuadPart / (freq / 10000) - lastUpdateTime / (freq / 10000)) + 1;
+	return delta;
 }

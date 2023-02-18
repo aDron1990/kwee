@@ -36,6 +36,8 @@ namespace kwee
 		void render();
 
 		virtual void update(){};
+
+		Scene* getScene();
 	};
 
 	extern kwee::Application* CreateApplication();

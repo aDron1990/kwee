@@ -6,7 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
-kwee::Collider::Collider(GameObject* owner, bool collisionSupport, bool mouseSupport)
+kwee::Collider::Collider(GameObject* owner, bool collisionSupport, bool mouseSupport) 
+	: collisionSupport_(collisionSupport), mouseSupport_(mouseSupport)
 {
 	owner_ = owner;
 	PhysicEngine::addCollider(this);
@@ -81,4 +82,19 @@ void kwee::Collider::onCollisionEnter(Collider* other)
 void kwee::Collider::onCollisionExit(Collider* other)
 {
 	owner_->onCollisionExit(other);
+}
+
+void kwee::Collider::onMouseHover()
+{
+	owner_->onMouseHover();
+}
+
+void kwee::Collider::onMouseHoverEnter()
+{
+	owner_->onMouseHoverEnter();
+}
+
+void kwee::Collider::onMouseHoverExit()
+{
+	owner_->onMouseHoverExit();
 }
