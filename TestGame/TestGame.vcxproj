@@ -94,8 +94,8 @@
   <ItemGroup>
     <None Include="res\shaders\collider_f.glsl" />
     <None Include="res\shaders\collider_v.glsl" />
-    <None Include="res\shaders\test_f.glsl" />
-    <None Include="res\shaders\test_v.glsl" />
+    <None Include="res\shaders\colored_f.glsl" />
+    <None Include="res\shaders\colored_v.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cube.h" />

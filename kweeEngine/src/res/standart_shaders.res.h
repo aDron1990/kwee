@@ -1,0 +1,42 @@
+#pragma once
+
+#include <string>
+
+char colored_v_str[] =
+"#version 330 core\n" 
+"layout (location = 0) in vec2 position;\n"
+"uniform mat4 model;\n"
+"uniform mat4 view;\n"
+"uniform mat4 projection;\n"
+"void main()\n"
+"{\n"
+"\tgl_Position = projection * view * model * vec4(position.x, position.y, 0.0f, 1.0f);\n"
+"}";
+
+char colored_f_str[] =
+"#version 330 core\n"
+"out vec4 FragColor;\n"
+"uniform vec3 color;\n"
+"void main()\n"
+"{\n"
+"\tFragColor = vec4(color, 1.0f);\n"
+"}";
+
+char collider_v_str[] =
+"#version 330 core\n"
+"layout (location = 0) in vec2 position;\n"
+"uniform mat4 model;\n"
+"uniform mat4 view;\n"
+"uniform mat4 projection;\n"
+"void main()\n"
+"{\n"
+"\tgl_Position = projection * view * model * vec4(position.x, position.y, 0.0f, 1.0f);\n"
+"}";
+
+char collider_f_str[] =
+"#version 330 core\n"
+"out vec4 FragColor;\n"
+"void main()\n"
+"{\n"
+"\tFragColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);\n"
+"}";

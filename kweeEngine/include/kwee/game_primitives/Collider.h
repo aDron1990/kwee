@@ -26,8 +26,7 @@ namespace kwee
 
 	public:
 
-		Collider();
-		Collider(GameObject* owner);
+		Collider(GameObject* owner, bool collisionSupport, bool mouseSupport);
 		~Collider();
 		
 		virtual void resizeCollider(glm::vec2 value);

@@ -20,11 +20,10 @@ namespace kwee
 		std::vector<float> vertices_;
 		std::vector<int> indices_;
 
-		void free();
-
 	public:
 
 		Mesh();
+		~Mesh();
 
 		std::vector<float> getVertices();
 		std::vector<int> getIndices();

@@ -23,8 +23,6 @@ kwee::Application::Application()
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	ResourceManager::loadShader("res/shaders/collider_v.glsl", "res/shaders/collider_f.glsl", "colliderShader");
 }
 
 kwee::Application::~Application()
@@ -46,10 +44,13 @@ void kwee::Application::run()
 	{
 		glfwPollEvents();
 
-		PhysicEngine::update();
-		update();
+		
 		if (activeScene_ != 0) activeScene_->update();
 
+		PhysicEngine::removeRequiedObjects();
+		PhysicEngine::update();
+
+		update();
 		render();
 
 		glfwSwapBuffers(window);

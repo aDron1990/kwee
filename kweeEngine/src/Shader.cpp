@@ -47,17 +47,23 @@ kwee::Shader::Shader(std::string vertexShaderCode, std::string fragmentShaderCod
 	glDeleteShader(fragment);
 }
 
+kwee::Shader::~Shader()
+{
+	std::cout << "~Shader" << std::endl;
+	glDeleteProgram(id_);
+}
+
 void kwee::Shader::use()
 {
 	glUseProgram(id_);
 }
 
-void kwee::Shader::free()
-{
-	glDeleteProgram(id_);
-}
-
 void kwee::Shader::setUniformMatrix4(std::string uniformName, glm::mat4 matrix)
 {
 	glUniformMatrix4fv(glGetUniformLocation(id_, uniformName.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
+void kwee::Shader::setUniformVector3(std::string uniformName, glm::vec3 vect)
+{
+	glUniform3fv(glGetUniformLocation(id_, uniformName.c_str()), 1, glm::value_ptr(vect));
 }

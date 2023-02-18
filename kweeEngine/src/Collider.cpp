@@ -6,12 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
-kwee::Collider::Collider()
-{
-	owner_ = 0;
-}
-
-kwee::Collider::Collider(GameObject* owner)
+kwee::Collider::Collider(GameObject* owner, bool collisionSupport, bool mouseSupport)
 {
 	owner_ = owner;
 	PhysicEngine::addCollider(this);
@@ -21,6 +16,9 @@ kwee::Collider::Collider(GameObject* owner)
 kwee::Collider::~Collider()
 {
 	PhysicEngine::removeCollider(this);
+	glDeleteBuffers(1, &vbo_);
+	glDeleteBuffers(1, &ebo_);
+	glDeleteVertexArrays(1, &vao_);
 }
 
 void kwee::Collider::resizeCollider(glm::vec2 value)

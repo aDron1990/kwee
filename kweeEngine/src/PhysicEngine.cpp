@@ -42,7 +42,7 @@ void kwee::PhysicEngine::update()
 {
 	LARGE_INTEGER time;
 	QueryPerformanceCounter(&time);
-
+	
 	for (int i = 0; i < colliders_.size(); i++)
 	{
 		for (int j = i + 1; j < colliders_.size(); j++)
@@ -77,7 +77,6 @@ void kwee::PhysicEngine::update()
 	}
 
 	lastUpdateTime = time.QuadPart;
-	removeRequiedObjects();
 }
 
 void kwee::PhysicEngine::removeRequiedObjects()

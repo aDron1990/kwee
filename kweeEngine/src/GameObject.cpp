@@ -2,18 +2,16 @@
 #include "kwee/game_primitives/Scene.h"
 #include "kwee/systems/ResourceManager.h"
 
-kwee::GameObject::GameObject(std::string meshResourñe, std::string shaderResourñe)
+kwee::GameObject::GameObject(Color color) : color_(color)
 {
-	mesh_ = ResourceManager::getMesh(meshResourñe);
-	shader_ = ResourceManager::getShader(shaderResourñe);
-	collider_ = 0;
+	mesh_ = ResourceManager::getMesh();
+	shader_ = ResourceManager::getShader("colored");
 }
 
-void kwee::GameObject::destroy()
+kwee::GameObject::~GameObject()
 {
 	owner_->removeObject(this);
 	deleteCollider();
-	delete this;
 }
 
 void kwee::GameObject::setOwnerScene(Scene* owner)
@@ -21,28 +19,28 @@ void kwee::GameObject::setOwnerScene(Scene* owner)
 	owner_ = owner;
 }
 
-void kwee::GameObject::draw(glm::mat4 viewProjectionMatrix)
+void kwee::GameObject::draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
-	shader_.use();
-	shader_.setUniformMatrix4("MVP", viewProjectionMatrix * getTransformMatrix());
-	mesh_.draw();
+	shader_->use();
+	shader_->setUniformVector3("color", glm::vec3(color_.red, color_.green, color_.blue));
+	shader_->setUniformMatrix4("model", getTransformMatrix());
+	shader_->setUniformMatrix4("view", viewMatrix);
+	shader_->setUniformMatrix4("projection", projectionMatrix);
+	mesh_->draw();
 	if (collider_ != 0 && colliderIsDrawing)
 	{
-		Shader shader = ResourceManager::getShader("colliderShader");
-		shader.use();
-		shader_.setUniformMatrix4("MVP", viewProjectionMatrix * getTransformMatrix());
+		auto shader = ResourceManager::getShader("collider");
+		shader->use();
+		shader_->setUniformMatrix4("model", getTransformMatrix());
+		shader_->setUniformMatrix4("view", viewMatrix);
+		shader_->setUniformMatrix4("projection", projectionMatrix);
 		collider_->draw();
 	}
 }
 
-kwee::Mesh kwee::GameObject::getMesh()
+void kwee::GameObject::createCollider(bool collisionSupport, bool mouseSupport)
 {
-	return mesh_;
-}
-
-void kwee::GameObject::createCollider()
-{
-	if (collider_ == 0) collider_ = new Collider(this);
+	if (collider_ == 0) collider_ = new Collider(this, collisionSupport, mouseSupport);
 }
 
 void kwee::GameObject::deleteCollider()

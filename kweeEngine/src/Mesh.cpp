@@ -41,6 +41,13 @@ kwee::Mesh::Mesh()
 
 }
 
+kwee::Mesh::~Mesh()
+{
+	glDeleteVertexArrays(1, &vao_);
+	glDeleteBuffers(1, &vbo_);
+	glDeleteBuffers(1, &ebo_);
+}
+
 std::vector<float> kwee::Mesh::getVertices()
 {
 	return vertices_;
@@ -57,11 +64,4 @@ void kwee::Mesh::draw()
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_);
 	glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0);
-}
-
-void kwee::Mesh::free()
-{
-	glDeleteVertexArrays(1, &vao_);
-	glDeleteBuffers(1, &vbo_);
-	glDeleteBuffers(1, &ebo_);
 }

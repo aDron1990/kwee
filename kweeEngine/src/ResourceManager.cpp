@@ -1,29 +1,27 @@
 #include "kwee/systems/ResourceManager.h"
+#include "res/standart_shaders.res.h"
 
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
-std::vector<std::pair<std::string, kwee::Shader*>> kwee::ResourceManager::shaders_ = std::vector<std::pair<std::string, kwee::Shader*>>();
-std::vector<std::pair<std::string, kwee::Mesh*>> kwee::ResourceManager::meshes_ = std::vector<std::pair<std::string, kwee::Mesh*>>();
+std::vector<std::pair<std::string, std::shared_ptr<kwee::Shader>>> kwee::ResourceManager::shaders_ = std::vector<std::pair<std::string, std::shared_ptr<kwee::Shader>>>();
+std::shared_ptr<kwee::Mesh> kwee::ResourceManager::mesh_ = nullptr;
 
 void kwee::ResourceManager::initialize()
 {
-    meshes_.push_back(std::pair<std::string, Mesh*>("rectangle", new Mesh));
+    mesh_ = std::make_shared<Mesh>();
+    shaders_.push_back(std::pair<std::string, std::shared_ptr<Shader>>("colored", compileShader_(colored_v_str, colored_f_str)));
+    shaders_.push_back(std::pair<std::string, std::shared_ptr<Shader>>("collider", compileShader_(collider_v_str, collider_f_str)));
 }
 
 void kwee::ResourceManager::terminate()
 {
     for (int i = 0; i < shaders_.size(); i++)
     {
-        shaders_[i].second->free();
-        delete shaders_[i].second;
+        shaders_[i].second.~shared_ptr();
     }
-    for (int i = 0; i < meshes_.size(); i++)
-    {
-        meshes_[i].second->free();
-        delete meshes_[i].second;
-    }
+    mesh_.~shared_ptr();
 }
 
 void kwee::ResourceManager::loadShader(const std::string vertexShaderFilePath, const std::string fragmentShaderFilePath, const std::string resourceName)
@@ -50,7 +48,7 @@ void kwee::ResourceManager::loadShader(const std::string vertexShaderFilePath, c
         vertexCode = vShaderStream.str();
         fragmentCode = fShaderStream.str();
 
-        shaders_.push_back(std::pair<std::string, Shader*>(resourceName, new Shader(vertexCode, fragmentCode)));
+        shaders_.push_back(std::pair<std::string, std::shared_ptr<Shader>>(resourceName, std::make_shared<Shader>(vertexCode, fragmentCode)));
     }
     catch (std::ifstream::failure& e)
     {
@@ -58,17 +56,22 @@ void kwee::ResourceManager::loadShader(const std::string vertexShaderFilePath, c
     }
 }
 
-kwee::Shader kwee::ResourceManager::getShader(const std::string resourceName)
+std::shared_ptr<kwee::Shader> kwee::ResourceManager::compileShader_(const std::string vertexShaderCode, const std::string fragmentShaderCode)
+{
+    return std::make_shared<Shader>(vertexShaderCode, fragmentShaderCode);
+}
+
+std::shared_ptr<kwee::Shader> kwee::ResourceManager::getShader(const std::string resourceName)
 {
     for (int i = 0; i < shaders_.size(); i++)
     {
-        if (shaders_[i].first == resourceName) return *shaders_[i].second;
+        if (shaders_[i].first == resourceName) return shaders_[i].second;
     }
 
     throw;
 }
 
-kwee::Mesh kwee::ResourceManager::getMesh(const std::string resourceName)
+std::shared_ptr<kwee::Mesh> kwee::ResourceManager::getMesh()
 {
-    return *meshes_[0].second;
+    return mesh_;
 }

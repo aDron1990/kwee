@@ -18,27 +18,15 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayerController.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cube.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\colored_v.glsl" />
-    <None Include="res\shaders\colored_f.glsl" />
-    <None Include="res\shaders\collider_v.glsl" />
-    <None Include="res\shaders\collider_f.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\TestScene.h">
+    <ClInclude Include="src\Slider.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayerController.h">
+    <ClInclude Include="src\GameScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cube.h">
+    <ClInclude Include="src\Ball.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

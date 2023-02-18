@@ -18,8 +18,8 @@ public:
 		PlayerController::controlled[0] = new Cube(true);
 		PlayerController::controlled[1] = new Cube(false);
 
-		PlayerController::controlled[0]->createCollider();
-		PlayerController::controlled[1]->createCollider();
+		PlayerController::controlled[0]->createCollider(1, 0);
+		PlayerController::controlled[1]->createCollider(1, 0);
 
 		PlayerController::controlled[0]->setPosition(glm::vec2(2, 0));
 		PlayerController::controlled[0]->setScale(glm::vec2(2, 1));

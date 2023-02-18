@@ -1,5 +1,7 @@
 #include "kwee/game_primitives/Scene.h"
 
+#include <iostream>
+
 kwee::Scene::Scene()
 {
 	objects_ = std::vector<GameObject*>();
@@ -7,19 +9,20 @@ kwee::Scene::Scene()
 
 kwee::Scene::~Scene()
 {
-	for (int i = 0; i < objects_.size(); i++)
-	{
-		objects_[i]->destroy();
-	}
+	//for (int i = 0; i < objects_.size(); i++)
+	//{
+	//	objects_[i]->destroy();
+	//}
 }
 
 void kwee::Scene::draw()
 {
 	mainCamera_->useViewport();
-	glm::mat4 viewProjectionMatrix = mainCamera_->getViewProjectionMatrix();
+	glm::mat4 viewMatrix = mainCamera_->getViewMatrix();
+	glm::mat4 projectionMatrix = mainCamera_->getProjectionMatrix();
 	for (int i = 0; i < objects_.size(); i++)
 	{
-		objects_[i]->draw(viewProjectionMatrix);
+		objects_[i]->draw(viewMatrix, projectionMatrix);
 	}
 }
 
@@ -41,7 +44,10 @@ void kwee::Scene::removeObject(GameObject* object)
 {
 	for (int i = 0; i < objects_.size(); i++)
 	{
-		if (objects_[i] == object);
-		objects_.erase(objects_.begin() + i, objects_.begin() + i + 1);
+		if (objects_[i] == object)
+		{ 
+			std::cout << i << std::endl;
+			objects_.erase(objects_.begin() + i, objects_.begin() + i + 1);
+		}
 	}
 }

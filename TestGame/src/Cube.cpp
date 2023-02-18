@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-Cube::Cube(bool started) : GameObject("rectangle", "testShader"), controlled(started)
+Cube::Cube(bool started) : GameObject(kwee::Color{1, 0, 0}), controlled(started)
 {
 	
 }

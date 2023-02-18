@@ -10,21 +10,19 @@ namespace kwee
 {
 	class KWEEAPI Shader
 	{
-		friend class ResourceManager;
 
 	private:
 
 		GLuint id_;
 
-		void free();
-
 	public:
 
-		Shader(){};
 		Shader(std::string vertexShaderCode, std::string fragmentShaderCode);
+		~Shader();
 
 		void use();
 		void setUniformMatrix4(std::string uniformName, glm::mat4 matrix);
+		void setUniformVector3(std::string uniformName, glm::vec3 vect);
 
 	};
 }

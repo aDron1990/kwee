@@ -9,8 +9,6 @@
 
 using kwee::Input;
 
-
-
 class TestGame : public kwee::Application
 {
 public:
@@ -19,7 +17,7 @@ public:
 
 	TestGame()
 	{
-		kwee::ResourceManager::loadShader("res/shaders/test_v.glsl", "res/shaders/test_f.glsl", "testShader");
+		kwee::ResourceManager::loadShader("res/shaders/colored_v.glsl", "res/shaders/colored_f.glsl", "colored");
 		scene = new TestScene;
 		loadScene(scene);
 		std::cout << kwee::PhysicEngine::cross(0, 0, 0, 2, 1, 0, 1, 2) << std::endl;

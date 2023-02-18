@@ -47,6 +47,8 @@ namespace kwee
 
 	class KWEEAPI PhysicEngine
 	{
+		friend class Application;
+
 	private:
 
 		static std::vector<Collider*> colliders_;

@@ -20,7 +20,11 @@ namespace kwee
 
 		Camera(glm::vec4 viewport);
 
-		glm::mat4 getViewProjectionMatrix();
+		glm::mat4 getProjectionMatrix();
+		glm::mat4 getViewMatrix();
 		void useViewport();
+
+		glm::vec2 ScreenToWorld(glm::fvec2 screenCoords);
+
 	};
 }
