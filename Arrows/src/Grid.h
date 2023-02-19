@@ -4,12 +4,15 @@
 #include "elements/Wire.h"
 #include "elements/DoubleWire.h"
 #include "elements/Block.h"
+#include "elements/Not.h"
+#include "elements/And.h"
+#include "elements/TreeWire.h"
 
 #include <kwee/kwee.h>
 
 enum class ArrowType
 {
-	Wire, DoubleWire, Block, Not, And, Or
+	Wire, DoubleWire, Block, Not, And, TreeWire
 };
 
 class Grid : public kwee::GameObject

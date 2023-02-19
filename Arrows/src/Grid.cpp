@@ -169,9 +169,13 @@ Arrow* Grid::createArrow(Grid* grid, Direction dir)
 	case ArrowType::Wire: return new Wire(grid, dir);
 	case ArrowType::DoubleWire: return new DoubleWire(grid, dir);
 	case ArrowType::Block: return new Block(grid, dir);
-	case ArrowType::Not:
-	case ArrowType::And:
-	case ArrowType::Or: 
-		break;
+	case ArrowType::Not: 
+	{
+		Arrow* n = new Not(grid, dir);
+		n->setState(true);
+		return n;
+	}
+	case ArrowType::And: return new And(grid, dir);
+	case ArrowType::TreeWire: return new TreeWire(grid, dir);
 	}
 }

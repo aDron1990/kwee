@@ -42,6 +42,12 @@ Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 1)
 	kwee::ResourceManager::loadTexture("res/textures/wire_unactive.png", "wire_unactive");
 	kwee::ResourceManager::loadTexture("res/textures/doublewire_active.png", "doublewire_active");
 	kwee::ResourceManager::loadTexture("res/textures/doublewire_unactive.png", "doublewire_unactive");
+	kwee::ResourceManager::loadTexture("res/textures/not_active.png", "not_active");
+	kwee::ResourceManager::loadTexture("res/textures/not_unactive.png", "not_unactive");
+	kwee::ResourceManager::loadTexture("res/textures/and_active.png", "and_active");
+	kwee::ResourceManager::loadTexture("res/textures/and_unactive.png", "and_unactive");
+	kwee::ResourceManager::loadTexture("res/textures/treewire_active.png", "treewire_active");
+	kwee::ResourceManager::loadTexture("res/textures/treewire_unactive.png", "treewire_unactive");
 	kwee::ResourceManager::loadTexture("res/textures/block_active.png", "block_active");
 
 	world = new World;
@@ -90,7 +96,8 @@ void Arrows::mainInput()
 {
 	if (kwee::Input::getKeyDown(GLFW_KEY_COMMA))
 	{
-		speed_i == 6 ? speed_i = 6 : speed_i++;
+		sizeof(speeds) / sizeof(int);
+		speed_i == sizeof(speeds) / sizeof(int) - 1 ? speed_i = sizeof(speeds) / sizeof(int) - 1 : speed_i++;
 		std::cout << "simulatin speed: " << speeds[speed_i] << std::endl;
 	}
 	if (kwee::Input::getKeyDown(GLFW_KEY_PERIOD))
@@ -120,17 +127,20 @@ void Arrows::mainInput()
 	else if (kwee::Input::getKeyDown(GLFW_KEY_4))
 	{
 		world->grid->at = ArrowType::Not;
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("not_active"));
 		std::cout << "selected Not" << std::endl;
 	}
 	else if (kwee::Input::getKeyDown(GLFW_KEY_5))
 	{
 		world->grid->at = ArrowType::And;
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("and_active"));
 		std::cout << "selected And" << std::endl;
 	}
 	else if (kwee::Input::getKeyDown(GLFW_KEY_6))
 	{
-		world->grid->at = ArrowType::Or;
-		std::cout << "selected Or" << std::endl;
+		world->grid->at = ArrowType::TreeWire;
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("treewire_active"));
+		std::cout << "selected TreeWire" << std::endl;
 	}
 }
 

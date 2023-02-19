@@ -137,6 +137,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\elements\And.cpp" />
+    <ClCompile Include="src\elements\Not.cpp" />
     <ClCompile Include="src\elements\Block.cpp" />
     <ClCompile Include="src\elements\DoubleWire.cpp" />
     <ClCompile Include="src\elements\Arrow.cpp" />
@@ -144,6 +146,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\World.cpp" />
     <ClCompile Include="src\elements\Wire.cpp" />
+    <ClCompile Include="src\elements\TreeWire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\kweeEngine\kweeEngine.vcxproj">
@@ -151,12 +154,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\elements\And.h" />
+    <ClInclude Include="src\elements\Not.h" />
     <ClInclude Include="src\elements\Block.h" />
     <ClInclude Include="src\elements\DoubleWire.h" />
     <ClInclude Include="src\elements\Arrow.h" />
     <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\World.h" />
     <ClInclude Include="src\elements\Wire.h" />
+    <ClInclude Include="src\elements\TreeWire.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

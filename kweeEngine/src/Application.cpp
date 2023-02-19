@@ -8,6 +8,8 @@
 kwee::Application* kwee::Application::instance_ = 0;
 bool kwee::Application::running_ = false;
 
+void framebuffersize_callback(GLFWwindow* window, int width, int height);
+
 kwee::Application::Application(glm::vec2 windowSize, std::string windowName, bool allocConsole) : windowSize_(windowSize)
 {
 	if (!allocConsole)
@@ -21,13 +23,15 @@ kwee::Application::Application(glm::vec2 windowSize, std::string windowName, boo
 	instance_ = this;
 	if(glfwInit() == 0) throw;
 
-	glfwWindowHint(GLFW_RESIZABLE, false);
+	//glfwWindowHint(GLFW_RESIZABLE, false);
 
 	window = glfwCreateWindow(windowSize_.x, windowSize_.y, windowName.c_str(), nullptr, nullptr);
 	if (window == 0) throw;
 	glfwMakeContextCurrent(window);
 
 	if (gladLoadGLLoader((GLADloadproc) glfwGetProcAddress) == 0) throw;
+
+	glfwSetFramebufferSizeCallback(window, framebuffersize_callback);
 
 	activeScene_ = 0;
 	Input::initialize(window);
@@ -100,4 +104,9 @@ glm::vec2 kwee::Application::getWindowSize()
 void kwee::Application::close()
 {
 	running_ = false;
+}
+
+void framebuffersize_callback(GLFWwindow* window, int width, int height)
+{
+	kwee::Application::getInstance()->getScene()->mainCamera->setVieport({0, 0, width, height});
 }
