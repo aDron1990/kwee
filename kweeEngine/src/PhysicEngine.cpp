@@ -95,18 +95,18 @@ void kwee::PhysicEngine::update()
 
 		for (int j = i + 1; j < colliders_.size(); j++)
 		{
-			if (colliders_[i]->collisionSupport_ || colliders_[j]->collisionSupport_)
+			if (colliders_[i]->collisionSupport_ && colliders_[j]->collisionSupport_)
 			{
 				if (checkCollisions(colliders_[i], colliders_[j]))
 				{
 					if (colliders_[i]->lastUpdateHaveCollision == false)
 					{
-						if (colliders_[i]->collisionSupport_) colliders_[i]->onCollisionEnter(colliders_[j]);
-						if (colliders_[j]->collisionSupport_) colliders_[j]->onCollisionEnter(colliders_[i]);
+						colliders_[i]->onCollisionEnter(colliders_[j]);
+						colliders_[j]->onCollisionEnter(colliders_[i]);
 					}
 
-					if (colliders_[i]->collisionSupport_) colliders_[i]->onCollision(colliders_[j]);
-					if (colliders_[j]->collisionSupport_) colliders_[j]->onCollision(colliders_[i]);
+					colliders_[i]->onCollision(colliders_[j]);
+					colliders_[j]->onCollision(colliders_[i]);
 
 					colliders_[i]->lastUpdateHaveCollision = true;
 					colliders_[j]->lastUpdateHaveCollision = true;
@@ -115,8 +115,8 @@ void kwee::PhysicEngine::update()
 				{
 					if (colliders_[i]->lastUpdateHaveCollision == true)
 					{
-						if (colliders_[i]->collisionSupport_) colliders_[i]->onCollisionExit(colliders_[j]);
-						if (colliders_[j]->collisionSupport_) colliders_[j]->onCollisionExit(colliders_[i]);
+						colliders_[i]->onCollisionExit(colliders_[j]);
+						colliders_[j]->onCollisionExit(colliders_[i]);
 
 						colliders_[i]->lastUpdateHaveCollision = false;
 						colliders_[j]->lastUpdateHaveCollision = false;

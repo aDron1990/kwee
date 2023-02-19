@@ -16,6 +16,7 @@ namespace kwee
 		static Application* instance_;
 		bool runing_;
 		Scene* activeScene_;
+		glm::vec2 windowSize_;
 
 	protected:
 
@@ -27,7 +28,7 @@ namespace kwee
 		GLuint vbo_, vao_, ebo_;
 
 
-		Application();
+		Application(glm::vec2 windowSize, bool allocConsole);
 		virtual ~Application();
 		static Application* getInstance();
 
@@ -38,6 +39,7 @@ namespace kwee
 		virtual void update(){};
 
 		Scene* getScene();
+		glm::vec2 getWindowSize();
 	};
 
 	extern kwee::Application* CreateApplication();

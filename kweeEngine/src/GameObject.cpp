@@ -6,6 +6,15 @@ kwee::GameObject::GameObject(Color color) : color_(color)
 {
 	mesh_ = ResourceManager::getMesh();
 	shader_ = ResourceManager::getShader("colored");
+	textured_ = false;
+}
+
+kwee::GameObject::GameObject(std::string textureName)
+{
+	mesh_ = ResourceManager::getMesh();
+	shader_ = ResourceManager::getShader("textured");
+	texture_ = ResourceManager::getTexture(textureName);
+	textured_ = true;
 }
 
 kwee::GameObject::~GameObject()
@@ -26,6 +35,7 @@ kwee::Scene* kwee::GameObject::getOwnerScene()
 
 void kwee::GameObject::draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
+	if (textured_) texture_->bind();
 	shader_->use();
 	shader_->setUniformVector3("color", glm::vec3(color_.red, color_.green, color_.blue));
 	shader_->setUniformMatrix4("model", getTransformMatrix());

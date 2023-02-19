@@ -3,7 +3,7 @@
 #include "Cube.h"
 #include "PlayerController.h"
 
-#include <kwee/game_primitives/Scene.h>
+#include <kwee/kwee.h>
 
 class TestScene : public kwee::Scene
 {
@@ -28,7 +28,7 @@ public:
 		addObject(PlayerController::controlled[0]);
 		addObject(PlayerController::controlled[1]);
 
-		mainCamera_ = new kwee::Camera(glm::vec4(0, 0, 800, 600));
+		mainCamera_ = new kwee::Camera(glm::vec4(0, 0, kwee::Application::getInstance()->getWindowSize()));
 		mainCamera_->setScale(glm::vec2(0.1f, 0.1f));
 	}
 

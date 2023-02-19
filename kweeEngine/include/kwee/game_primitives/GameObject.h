@@ -4,6 +4,7 @@
 #include "Transformable.h"
 #include "kwee/graphics/Mesh.h"
 #include "kwee/graphics/Shader.h"
+#include "kwee/graphics/Texture.h"
 #include "kwee/graphics/Color.h"
 #include "Collider.h"
 
@@ -20,11 +21,12 @@ namespace kwee
 	private:
 
 		std::shared_ptr<Shader> shader_;
+		std::shared_ptr<Texture> texture_;
 		std::shared_ptr<Mesh> mesh_;
 		Color color_;
-//		Texture texture;
 		Scene* owner_;
 		Collider* collider_ = 0;
+		bool textured_;
 
 	protected:
 
@@ -46,7 +48,7 @@ namespace kwee
 		virtual void onMouseHoverExit() {};
 
 		GameObject(kwee::Color color);
-//		GameObject(kwee::Texture texture);
+		GameObject(std::string textureName);
 
 		void setOwnerScene(Scene* owner);
 		Scene* getOwnerScene();

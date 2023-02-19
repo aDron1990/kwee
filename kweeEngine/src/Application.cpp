@@ -2,15 +2,27 @@
 #include "kwee/systems/ResourceManager.h"
 #include "kwee/systems/PhysicEngine.h"
 
+#include <Windows.h>
+#include <iostream>
+
 kwee::Application* kwee::Application::instance_ = 0;
 
-kwee::Application::Application()
+kwee::Application::Application(glm::vec2 windowSize, bool allocConsole) : windowSize_(windowSize)
 {
+	if (!allocConsole)
+	{
+		HWND wnd = GetConsoleWindow();
+		FreeConsole();
+		PostMessage(wnd, WM_CLOSE, 0, 0);
+	}
+
 	runing_ = true;
 	instance_ = this;
 	if(glfwInit() == 0) throw;
 
-	window = glfwCreateWindow(800, 600, "kwee app", nullptr, nullptr);
+	glfwWindowHint(GLFW_RESIZABLE, false);
+
+	window = glfwCreateWindow(windowSize_.x, windowSize_.y, "kwee app", nullptr, nullptr);
 	if (window == 0) throw;
 	glfwMakeContextCurrent(window);
 
@@ -74,4 +86,9 @@ void kwee::Application::render()
 kwee::Scene* kwee::Application::getScene()
 {
 	return activeScene_;
+}
+
+glm::vec2 kwee::Application::getWindowSize()
+{
+	return windowSize_;
 }

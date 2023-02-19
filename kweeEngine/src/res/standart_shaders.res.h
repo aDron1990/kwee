@@ -22,6 +22,34 @@ char colored_f_str[] =
 "\tFragColor = vec4(color, 1.0f);\n"
 "}";
 
+char textured_v_str[] =
+"#version 330 core\n"
+"layout(location = 0) in vec3 aPos;\n"
+"layout(location = 1) in vec2 aTexCoord;\n"
+"uniform mat4 model;\n"
+"uniform mat4 view;\n"
+"uniform mat4 projection;\n"
+"out vec2 TexCoord;\n"
+"out vec3 color;\n"
+"void main()\n"
+"{\n"
+"\tgl_Position = projection * view * model * vec4(aPos.x, aPos.y, 0.0f, 1.0f);\n"
+"\tTexCoord = aTexCoord;\n"
+"\tcolor = vec3(aTexCoord.x, aTexCoord.y, 0.0);\n"
+"}";
+
+char textured_f_str[] =
+"#version 330 core\n"
+"out vec4 FragColor;\n"
+"in vec2 TexCoord;\n"
+"in vec3 color;\n"
+"uniform sampler2D ourTexture;\n"
+"void main()\n"
+"{\n"
+"\tFragColor = texture(ourTexture, TexCoord);\n"
+//"\tFragColor = vec4(color, 1.0);\n"
+"}";
+
 char collider_v_str[] =
 "#version 330 core\n"
 "layout (location = 0) in vec2 position;\n"

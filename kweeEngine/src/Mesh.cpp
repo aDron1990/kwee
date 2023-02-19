@@ -2,21 +2,21 @@
 
 float rectVerts[] =
 {
-	 0.5,  0.5,
-	 0.5, -0.5,
-	-0.5, -0.5,
-	-0.5,  0.5
+	 0.5,  0.5,  1.0,  1.0, 
+	 0.5, -0.5,  1.0,  0.0,
+	-0.5, -0.5,  0.0,  0.0,
+	-0.5,  0.5,  0.0,  1.0
 };
 
 int rectInds[] =
 {
-	0, 1, 2,
-	0, 2, 3
+	0, 1, 3,
+	1, 2, 3
 };
 
 kwee::Mesh::Mesh()
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		vertices_.push_back(rectVerts[i]);
 	}
@@ -32,9 +32,14 @@ kwee::Mesh::Mesh()
 
 	glBindVertexArray(vao_);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_);
+
 	glBufferData(GL_ARRAY_BUFFER, vertices_.size() * sizeof(float), vertices_.data(), GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)(0 * sizeof(float)));
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(0 * sizeof(float)));
 	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_.size() * sizeof(int), indices_.data(), GL_STATIC_DRAW);
@@ -62,6 +67,7 @@ void kwee::Mesh::draw()
 {
 	glBindVertexArray(vao_);
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_);
 	glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0);
 }

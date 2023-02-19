@@ -5,7 +5,7 @@
 #include <kwee/systems/Input.h>
 #include <kwee/game_primitives/Scene.h>
 
-Cube::Cube(bool started) : GameObject(kwee::Color{1, 0, 0}), controlled(started)
+Cube::Cube(bool started) : GameObject("test"), controlled(started)
 {
 	
 }
