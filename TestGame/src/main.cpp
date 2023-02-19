@@ -15,7 +15,7 @@ public:
 
 	TestScene* scene;
 
-	TestGame() : Application({1280, 720}, 1)
+	TestGame() : Application({1280, 720}, 0)
 	{
 		kwee::ResourceManager::loadTexture("res/textures/texture.jpg", "test");
 		scene = new TestScene;
