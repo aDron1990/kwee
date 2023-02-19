@@ -17,11 +17,11 @@ kwee::Scene::~Scene()
 
 void kwee::Scene::draw()
 {
-	mainCamera_->useViewport();
+	mainCamera->useViewport();
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearColor(background.red, background.green, background.blue, 1.0);
-	glm::mat4 viewMatrix = mainCamera_->getViewMatrix();
-	glm::mat4 projectionMatrix = mainCamera_->getProjectionMatrix();
+	glm::mat4 viewMatrix = mainCamera->getViewMatrix();
+	glm::mat4 projectionMatrix = mainCamera->getProjectionMatrix();
 	for (int i = 0; i < objects_.size(); i++)
 	{
 		objects_[i]->draw(viewMatrix, projectionMatrix);
@@ -48,7 +48,6 @@ void kwee::Scene::removeObject(GameObject* object)
 	{
 		if (objects_[i] == object)
 		{ 
-			std::cout << i << std::endl;
 			objects_.erase(objects_.begin() + i, objects_.begin() + i + 1);
 		}
 	}
@@ -56,5 +55,5 @@ void kwee::Scene::removeObject(GameObject* object)
 
 kwee::Camera* kwee::Scene::getCamera()
 {
-	return mainCamera_;
+	return mainCamera;
 }

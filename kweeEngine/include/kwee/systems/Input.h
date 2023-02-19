@@ -18,6 +18,7 @@ namespace kwee
 		static bool m_button[8];
 		static bool m_button_down[8];
 		static bool m_button_up[8];
+		static glm::vec2 m_wheel_scroll;
 
 		static glm::ivec2 mousePos;
 
@@ -41,6 +42,7 @@ namespace kwee
 		static void setMousePosition(glm::vec2 pos);
 		static glm::vec2 getMousePosition();
 
-		
+		static void setMouseWheelScroll(glm::vec2 scrool);
+		static glm::vec2 getMouseWheelScroll();
 	};
 }

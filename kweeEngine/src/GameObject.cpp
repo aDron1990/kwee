@@ -33,16 +33,30 @@ kwee::Scene* kwee::GameObject::getOwnerScene()
 	return owner_;
 }
 
+void kwee::GameObject::setTexture(std::shared_ptr<Texture> texture)
+{
+	texture_ = texture;
+}
+
+std::shared_ptr<kwee::Texture> kwee::GameObject::getTexture()
+{
+	return texture_;
+}
+
 void kwee::GameObject::draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
-	if (textured_) texture_->bind();
-	shader_->use();
-	shader_->setUniformVector3("color", glm::vec3(color.red, color.green, color.blue));
-	shader_->setUniformFloat("mixval", mix);
-	shader_->setUniformMatrix4("model", getTransformMatrix());
-	shader_->setUniformMatrix4("view", viewMatrix);
-	shader_->setUniformMatrix4("projection", projectionMatrix);
-	mesh_->draw();
+	if (visible)
+	{
+		if (textured_) texture_->bind();
+		shader_->use();
+		shader_->setUniformVector3("color", glm::vec3(color.red, color.green, color.blue));
+		shader_->setUniformFloat("mixval", mix);
+		shader_->setUniformFloat("alpha", alpha);
+		shader_->setUniformMatrix4("model", getTransformMatrix());
+		shader_->setUniformMatrix4("view", viewMatrix);
+		shader_->setUniformMatrix4("projection", projectionMatrix);
+		mesh_->draw();
+	}
 	if (collider_ != 0 && colliderIsDrawing)
 	{
 		auto shader = ResourceManager::getShader("collider");

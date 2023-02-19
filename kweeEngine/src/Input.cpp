@@ -10,6 +10,7 @@ bool kwee::Input::key_down[512] = { 0 };
 bool kwee::Input::m_button[8] = { 0 };
 bool kwee::Input::m_button_down[8] = { 0 };
 bool kwee::Input::m_button_up[8] = { 0 };
+glm::vec2 kwee::Input::m_wheel_scroll = glm::vec2{ 0 };
 glm::ivec2 kwee::Input::mousePos = glm::ivec2{0};
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -32,6 +33,11 @@ void cursorposition_callback(GLFWwindow* window, double xpos, double ypos)
 	kwee::Input::setMousePosition({ xpos, ypos });
 }
 
+void wheelscroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	kwee::Input::setMouseWheelScroll({ xoffset, yoffset });
+}
+
 void kwee::Input::initialize(GLFWwindow* window)
 {
 	memset(key, 0, sizeof(key));
@@ -40,11 +46,13 @@ void kwee::Input::initialize(GLFWwindow* window)
 	memset(m_button, 0, sizeof(m_button));
 	memset(m_button_up, 0, sizeof(m_button_up));
 	memset(m_button_down, 0, sizeof(m_button_down));
+	m_wheel_scroll = glm::vec2(0.0f);
 
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mbutton_callback);
 	glfwSetCursorPosCallback(window, cursorposition_callback);
 	glfwSetWindowCloseCallback(window, windowclose_callback);
+	glfwSetScrollCallback(window, wheelscroll_callback);
 }
 
 void kwee::Input::terminate(GLFWwindow* window)
@@ -58,6 +66,7 @@ void kwee::Input::update()
 	memset(key_down, 0, sizeof(key_down));
 	memset(m_button_up, 0, sizeof(m_button_up));
 	memset(m_button_down, 0, sizeof(m_button_down));
+	m_wheel_scroll = glm::vec2(0.0f);
 }
 
 void kwee::Input::setKey(int code, bool action)
@@ -126,4 +135,14 @@ void kwee::Input::setMousePosition(glm::vec2 pos)
 glm::vec2 kwee::Input::getMousePosition()
 {
 	return mousePos;
+}
+
+void kwee::Input::setMouseWheelScroll(glm::vec2 scrool)
+{
+	m_wheel_scroll = scrool;
+}
+
+glm::vec2 kwee::Input::getMouseWheelScroll()
+{
+	return m_wheel_scroll;
 }

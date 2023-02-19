@@ -12,7 +12,7 @@
 std::vector<kwee::Collider*> kwee::PhysicEngine::colliders_ = std::vector<kwee::Collider*>();
 std::vector<int>  kwee::PhysicEngine::requiedToRemoveCollidersIds_ = std::vector<int>();
 long long kwee::PhysicEngine::lastUpdateTime = 0;
-long long kwee::PhysicEngine::delta = 0;
+double kwee::PhysicEngine::delta = 0;
 long long kwee::PhysicEngine::freq = 0;
 
 void kwee::PhysicEngine::initialize()
@@ -47,7 +47,7 @@ void kwee::PhysicEngine::update()
 	LARGE_INTEGER time;
 	QueryPerformanceCounter(&time);
 	
-	delta = (time.QuadPart / (freq / 10000) - lastUpdateTime / (freq / 10000)) + 1;
+	delta = ((double)(time.QuadPart / (freq / 10000) - lastUpdateTime / (freq / 10000)) + 1) / 10000.0;
 	lastUpdateTime = time.QuadPart / (freq / 10000);
 
 	glm::vec2 mousePos = Application::getInstance()->getScene()->getCamera()->ScreenToWorld(Input::getMousePosition());
@@ -212,9 +212,12 @@ float kwee::PhysicEngine::product(float Px, float Py, float Ax, float Ay, float 
 	return (Bx - Ax) * (Py - Ay) - (By - Ay) * (Px - Ax);
 }
 
-int kwee::PhysicEngine::getDelta()
+double kwee::PhysicEngine::getDelta()
 {
-	LARGE_INTEGER time;
-	QueryPerformanceCounter(&time);
 	return delta;
+}
+
+long long int kwee::PhysicEngine::millis()
+{
+	return lastUpdateTime / 10000;
 }

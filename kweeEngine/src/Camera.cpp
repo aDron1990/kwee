@@ -2,6 +2,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glad/glad.h>
+#include <iostream>
 
 kwee::Camera::Camera(glm::vec4 viewport) : viewport_(viewport)
 {
@@ -28,7 +29,10 @@ glm::vec2 kwee::Camera::ScreenToWorld(glm::vec2 screenCoords)
 {
 	screenCoords -= glm::vec2{ viewport_[2] / 2, viewport_[3] / 2};
 	screenCoords.y = -screenCoords.y;
-	screenCoords /= (viewport_[2] < viewport_[3] ? viewport_[2] : viewport_[3]) / 2;
-	screenCoords *= glm::vec2{ 1.0f } / getScale();
-	return screenCoords;
+	screenCoords /= glm::vec2{ viewport_[2] / 2, viewport_[3] / 2 };
+
+	glm::vec4 tmp{ screenCoords, 0.0, 1.0 };
+	tmp = (projection_ * getTransformMatrix()) / tmp;
+
+	return tmp;
 }

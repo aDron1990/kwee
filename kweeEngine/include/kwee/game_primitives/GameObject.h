@@ -30,12 +30,14 @@ namespace kwee
 	protected:
 
 		virtual ~GameObject();
-		Color color = {0, 0, 0};
-		float mix = 0;
 
 	public:
 
+		Color color = { 0, 0, 0 };
+		float mix = 0;
+		float alpha = 1;
 		bool colliderIsDrawing = false;
+		bool visible = true;
 
 		void createCollider(bool collisionSupport, bool mouseSupport);
 		void deleteCollider();
@@ -53,6 +55,9 @@ namespace kwee
 
 		void setOwnerScene(Scene* owner);
 		Scene* getOwnerScene();
+
+		void setTexture(std::shared_ptr<Texture> texture);
+		std::shared_ptr<Texture> getTexture();
 
 		void draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 		virtual void update() {};

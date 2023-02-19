@@ -17,9 +17,9 @@ namespace kwee
 
 	protected:
 
-		Camera* mainCamera_;
-
 	public:
+
+		Camera* mainCamera;
 
 		Color background = {1, 1, 1};
 

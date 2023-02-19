@@ -8,7 +8,7 @@
 kwee::Application* kwee::Application::instance_ = 0;
 bool kwee::Application::running_ = false;
 
-kwee::Application::Application(glm::vec2 windowSize, bool allocConsole) : windowSize_(windowSize)
+kwee::Application::Application(glm::vec2 windowSize, std::string windowName, bool allocConsole) : windowSize_(windowSize)
 {
 	if (!allocConsole)
 	{
@@ -23,7 +23,7 @@ kwee::Application::Application(glm::vec2 windowSize, bool allocConsole) : window
 
 	glfwWindowHint(GLFW_RESIZABLE, false);
 
-	window = glfwCreateWindow(windowSize_.x, windowSize_.y, "kwee app", nullptr, nullptr);
+	window = glfwCreateWindow(windowSize_.x, windowSize_.y, windowName.c_str(), nullptr, nullptr);
 	if (window == 0) throw;
 	glfwMakeContextCurrent(window);
 

@@ -28,7 +28,7 @@ namespace kwee
 		GLuint vbo_, vao_, ebo_;
 
 
-		Application(glm::vec2 windowSize, bool allocConsole);
+		Application(glm::vec2 windowSize, std::string windowName, bool allocConsole);
 		virtual ~Application();
 		static Application* getInstance();
 

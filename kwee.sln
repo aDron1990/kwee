@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kweeEngine", "kweeEngine\kw
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestGame", "TestGame\TestGame.vcxproj", "{F4BC31D1-8F35-4C39-9848-33D0519942B8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pong", "Pong\Pong.vcxproj", "{B76310A6-0582-498D-8C84-3077ED851C96}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Arrows", "Arrows\Arrows.vcxproj", "{A3E003E6-5E23-4312-B113-D5A99CE10CC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,12 +33,14 @@ Global
 		{F4BC31D1-8F35-4C39-9848-33D0519942B8}.Release|x64.Build.0 = Release|x64
 		{F4BC31D1-8F35-4C39-9848-33D0519942B8}.Release|x86.ActiveCfg = Release|x64
 		{F4BC31D1-8F35-4C39-9848-33D0519942B8}.Release|x86.Build.0 = Release|x64
-		{B76310A6-0582-498D-8C84-3077ED851C96}.Debug|x64.ActiveCfg = Debug|x64
-		{B76310A6-0582-498D-8C84-3077ED851C96}.Debug|x64.Build.0 = Debug|x64
-		{B76310A6-0582-498D-8C84-3077ED851C96}.Debug|x86.ActiveCfg = Debug|x64
-		{B76310A6-0582-498D-8C84-3077ED851C96}.Release|x64.ActiveCfg = Release|x64
-		{B76310A6-0582-498D-8C84-3077ED851C96}.Release|x64.Build.0 = Release|x64
-		{B76310A6-0582-498D-8C84-3077ED851C96}.Release|x86.ActiveCfg = Release|x64
+		{A3E003E6-5E23-4312-B113-D5A99CE10CC5}.Debug|x64.ActiveCfg = Debug|x64
+		{A3E003E6-5E23-4312-B113-D5A99CE10CC5}.Debug|x64.Build.0 = Debug|x64
+		{A3E003E6-5E23-4312-B113-D5A99CE10CC5}.Debug|x86.ActiveCfg = Debug|Win32
+		{A3E003E6-5E23-4312-B113-D5A99CE10CC5}.Debug|x86.Build.0 = Debug|Win32
+		{A3E003E6-5E23-4312-B113-D5A99CE10CC5}.Release|x64.ActiveCfg = Release|x64
+		{A3E003E6-5E23-4312-B113-D5A99CE10CC5}.Release|x64.Build.0 = Release|x64
+		{A3E003E6-5E23-4312-B113-D5A99CE10CC5}.Release|x86.ActiveCfg = Release|Win32
+		{A3E003E6-5E23-4312-B113-D5A99CE10CC5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

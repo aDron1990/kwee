@@ -17,9 +17,10 @@ char colored_f_str[] =
 "#version 330 core\n"
 "out vec4 FragColor;\n"
 "uniform vec3 color;\n"
+"uniform float alpha;\n"
 "void main()\n"
 "{\n"
-"\tFragColor = vec4(color, 1.0f);\n"
+"\tFragColor = vec4(color, alpha);\n"
 "}";
 
 char textured_v_str[] =
@@ -43,9 +44,10 @@ char textured_f_str[] =
 "uniform vec3 color;\n"
 "uniform sampler2D ourTexture;\n"
 "uniform float mixval;\n"
+"uniform float alpha;\n"
 "void main()\n"
 "{\n"
-"\tFragColor = mix(texture(ourTexture, TexCoord), vec4(color, 1.0), mixval);\n"
+"\tFragColor = mix(texture(ourTexture, TexCoord), vec4(color, alpha), mixval);\n"
 "}";
 
 char collider_v_str[] =
