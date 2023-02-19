@@ -21,7 +21,6 @@ public:
 		scene = new TestScene;
 		loadScene(scene);
 
-
 	}
 
 	~TestGame()
@@ -32,6 +31,11 @@ public:
 	void update() override
 	{
 		PlayerController::update();
+	}
+
+	void onWindowClose() override
+	{
+		close();
 	}
 };
 

@@ -15,6 +15,7 @@ public:
 
 	TestScene()
 	{
+		background = { 0.37, 0.63, 0.76 };
 		PlayerController::controlled[0] = new Cube(true);
 		PlayerController::controlled[1] = new Cube(false);
 

@@ -18,6 +18,8 @@ kwee::Scene::~Scene()
 void kwee::Scene::draw()
 {
 	mainCamera_->useViewport();
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(background.red, background.green, background.blue, 1.0);
 	glm::mat4 viewMatrix = mainCamera_->getViewMatrix();
 	glm::mat4 projectionMatrix = mainCamera_->getProjectionMatrix();
 	for (int i = 0; i < objects_.size(); i++)

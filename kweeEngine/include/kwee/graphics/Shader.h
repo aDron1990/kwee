@@ -23,6 +23,7 @@ namespace kwee
 		void use();
 		void setUniformMatrix4(std::string uniformName, glm::mat4 matrix);
 		void setUniformVector3(std::string uniformName, glm::vec3 vect);
-
+		void setUniformFloat(std::string uniformName, float value);
+		void setUniformInt(std::string uniformName, int value);
 	};
 }

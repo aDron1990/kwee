@@ -2,7 +2,7 @@
 #include "kwee/game_primitives/Scene.h"
 #include "kwee/systems/ResourceManager.h"
 
-kwee::GameObject::GameObject(Color color) : color_(color)
+kwee::GameObject::GameObject(Color color) : color(color)
 {
 	mesh_ = ResourceManager::getMesh();
 	shader_ = ResourceManager::getShader("colored");
@@ -37,7 +37,8 @@ void kwee::GameObject::draw(const glm::mat4& viewMatrix, const glm::mat4& projec
 {
 	if (textured_) texture_->bind();
 	shader_->use();
-	shader_->setUniformVector3("color", glm::vec3(color_.red, color_.green, color_.blue));
+	shader_->setUniformVector3("color", glm::vec3(color.red, color.green, color.blue));
+	shader_->setUniformFloat("mixval", mix);
 	shader_->setUniformMatrix4("model", getTransformMatrix());
 	shader_->setUniformMatrix4("view", viewMatrix);
 	shader_->setUniformMatrix4("projection", projectionMatrix);

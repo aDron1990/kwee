@@ -23,7 +23,6 @@ namespace kwee
 		std::shared_ptr<Shader> shader_;
 		std::shared_ptr<Texture> texture_;
 		std::shared_ptr<Mesh> mesh_;
-		Color color_;
 		Scene* owner_;
 		Collider* collider_ = 0;
 		bool textured_;
@@ -31,6 +30,8 @@ namespace kwee
 	protected:
 
 		virtual ~GameObject();
+		Color color = {0, 0, 0};
+		float mix = 0;
 
 	public:
 
@@ -52,7 +53,6 @@ namespace kwee
 
 		void setOwnerScene(Scene* owner);
 		Scene* getOwnerScene();
-//		Mesh getMesh();
 
 		void draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 		virtual void update() {};

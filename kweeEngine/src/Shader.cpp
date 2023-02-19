@@ -49,7 +49,6 @@ kwee::Shader::Shader(std::string vertexShaderCode, std::string fragmentShaderCod
 
 kwee::Shader::~Shader()
 {
-	std::cout << "~Shader" << std::endl;
 	glDeleteProgram(id_);
 }
 
@@ -66,4 +65,14 @@ void kwee::Shader::setUniformMatrix4(std::string uniformName, glm::mat4 matrix)
 void kwee::Shader::setUniformVector3(std::string uniformName, glm::vec3 vect)
 {
 	glUniform3fv(glGetUniformLocation(id_, uniformName.c_str()), 1, glm::value_ptr(vect));
+}
+
+void kwee::Shader::setUniformFloat(std::string uniformName, float value)
+{
+	glUniform1f(glGetUniformLocation(id_, uniformName.c_str()), value);
+}
+
+void kwee::Shader::setUniformInt(std::string uniformName, int value)
+{
+	glUniform1i(glGetUniformLocation(id_, uniformName.c_str()), value);
 }

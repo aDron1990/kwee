@@ -6,6 +6,7 @@
 #include <iostream>
 
 kwee::Application* kwee::Application::instance_ = 0;
+bool kwee::Application::running_ = false;
 
 kwee::Application::Application(glm::vec2 windowSize, bool allocConsole) : windowSize_(windowSize)
 {
@@ -16,7 +17,7 @@ kwee::Application::Application(glm::vec2 windowSize, bool allocConsole) : window
 		PostMessage(wnd, WM_CLOSE, 0, 0);
 	}
 
-	runing_ = true;
+	running_ = true;
 	instance_ = this;
 	if(glfwInit() == 0) throw;
 
@@ -52,7 +53,7 @@ kwee::Application* kwee::Application::getInstance()
 
 void kwee::Application::run()
 {
-	while (runing_)
+	while (running_)
 	{
 		glfwPollEvents();
 
@@ -78,9 +79,12 @@ void kwee::Application::loadScene(Scene* scene)
 
 void kwee::Application::render()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-	glClearColor(0.1, 0.2, 0.15, 1.0);
 	if (activeScene_ != 0) activeScene_->draw();
+	else
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClearColor(0, 0, 0, 1.0);
+	}
 }
 
 kwee::Scene* kwee::Application::getScene()
@@ -91,4 +95,9 @@ kwee::Scene* kwee::Application::getScene()
 glm::vec2 kwee::Application::getWindowSize()
 {
 	return windowSize_;
+}
+
+void kwee::Application::close()
+{
+	running_ = false;
 }

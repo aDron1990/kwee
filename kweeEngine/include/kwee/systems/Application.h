@@ -14,7 +14,7 @@ namespace kwee
 	private:
 
 		static Application* instance_;
-		bool runing_;
+		static bool running_;
 		Scene* activeScene_;
 		glm::vec2 windowSize_;
 
@@ -36,10 +36,12 @@ namespace kwee
 		void loadScene(Scene* scene);
 		void render();
 
-		virtual void update(){};
+		virtual void update() {};
+		virtual void onWindowClose() {};
 
 		Scene* getScene();
 		glm::vec2 getWindowSize();
+		static void close();
 	};
 
 	extern kwee::Application* CreateApplication();

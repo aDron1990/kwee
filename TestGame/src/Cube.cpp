@@ -3,21 +3,24 @@
 
 #include <iostream>
 #include <kwee/systems/Input.h>
+#include <kwee/systems/Application.h>
 #include <kwee/game_primitives/Scene.h>
 
 Cube::Cube(bool started) : GameObject("test"), controlled(started)
 {
-	
+	color = { 0, 1, 0 };
 }
 
 void Cube::onCollisionEnter(kwee::Collider* other)
 {
 	if (controlled)
 	{
+		colliderIsDrawing = false;
 		controlled = false;
 	}
 	else
 	{
+		colliderIsDrawing = true;
 		controlled = true;
 	}
 }
@@ -32,25 +35,24 @@ void Cube::update()
 
 void Cube::onMouseHover()
 {
-//	std::cout << kwee::Input::getMouseButtonDown(0);
 	if (kwee::Input::getMouseButtonDown(0))
 	{
-		//std::cout << "drag" << std::endl;
+		mix = 0.2;
 		drag = true;
 	}
 	if (kwee::Input::getMouseButtonUp(0))
 	{
+		mix = 0;
 		drag = false;
 	}
 }
 
 void Cube::onMouseHoverEnter()
 {
-	colliderIsDrawing = true;
+	
 }
 
 void Cube::onMouseHoverExit()
 {
-	colliderIsDrawing = false;
 	drag = false;
 }

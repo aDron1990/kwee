@@ -1,4 +1,5 @@
 #include "kwee/systems/Input.h"
+#include "kwee/systems/Application.h"
 
 #include <memory>
 #include <iostream>
@@ -21,7 +22,12 @@ void mbutton_callback(GLFWwindow* window, int key, int action, int mods)
 	if (action != GLFW_REPEAT)	kwee::Input::setMouseButton(key, action);
 }
 
-static void cursorposition_callback(GLFWwindow* window, double xpos, double ypos)
+void windowclose_callback(GLFWwindow* window)
+{
+	kwee::Application::getInstance()->onWindowClose();
+}
+
+void cursorposition_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	kwee::Input::setMousePosition({ xpos, ypos });
 }
@@ -38,6 +44,7 @@ void kwee::Input::initialize(GLFWwindow* window)
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mbutton_callback);
 	glfwSetCursorPosCallback(window, cursorposition_callback);
+	glfwSetWindowCloseCallback(window, windowclose_callback);
 }
 
 void kwee::Input::terminate(GLFWwindow* window)

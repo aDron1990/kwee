@@ -25,6 +25,10 @@ void kwee::ResourceManager::terminate()
     {
         shaders_[i].second.~shared_ptr();
     }
+    for (int i = 0; i < textures_.size(); i++)
+    {
+        textures_[i].second.~shared_ptr();
+    }
     mesh_.~shared_ptr();
 }
 
@@ -62,7 +66,6 @@ void kwee::ResourceManager::loadShader(const std::string vertexShaderFilePath, c
 
 void kwee::ResourceManager::loadTexture(const std::string textureFilePath, const std::string resourceName)
 {
-//    glPixelStoref(GL_UNPACK_ALIGNMENT, 1);
     stbi_set_flip_vertically_on_load(true);
     int width, height, channels;
     stbi_uc* data = stbi_load(textureFilePath.c_str(), &width, &height, &channels, 0);

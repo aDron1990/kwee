@@ -30,24 +30,22 @@ char textured_v_str[] =
 "uniform mat4 view;\n"
 "uniform mat4 projection;\n"
 "out vec2 TexCoord;\n"
-"out vec3 color;\n"
 "void main()\n"
 "{\n"
 "\tgl_Position = projection * view * model * vec4(aPos.x, aPos.y, 0.0f, 1.0f);\n"
 "\tTexCoord = aTexCoord;\n"
-"\tcolor = vec3(aTexCoord.x, aTexCoord.y, 0.0);\n"
 "}";
 
 char textured_f_str[] =
 "#version 330 core\n"
 "out vec4 FragColor;\n"
 "in vec2 TexCoord;\n"
-"in vec3 color;\n"
+"uniform vec3 color;\n"
 "uniform sampler2D ourTexture;\n"
+"uniform float mixval;\n"
 "void main()\n"
 "{\n"
-"\tFragColor = texture(ourTexture, TexCoord);\n"
-//"\tFragColor = vec4(color, 1.0);\n"
+"\tFragColor = mix(texture(ourTexture, TexCoord), vec4(color, 1.0), mixval);\n"
 "}";
 
 char collider_v_str[] =
