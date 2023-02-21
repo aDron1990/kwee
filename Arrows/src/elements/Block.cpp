@@ -1,6 +1,6 @@
 #include "Block.h"
 
-Block::Block(Grid* grid, Direction dir) : Arrow(grid, dir, "block_active", "block_active")
+Block::Block(Grid* grid, Direction dir) : Arrow(grid, ArrowType::Block, dir, "block_active", "block_active")
 {
 
 }

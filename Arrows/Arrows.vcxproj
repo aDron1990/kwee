@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\elements\Lever.cpp" />
     <ClCompile Include="src\elements\And.cpp" />
     <ClCompile Include="src\elements\Not.cpp" />
     <ClCompile Include="src\elements\Block.cpp" />
@@ -154,6 +155,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\elements\Lever.h" />
     <ClInclude Include="src\elements\And.h" />
     <ClInclude Include="src\elements\Not.h" />
     <ClInclude Include="src\elements\Block.h" />

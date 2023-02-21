@@ -7,16 +7,14 @@
 #include "elements/Not.h"
 #include "elements/And.h"
 #include "elements/TreeWire.h"
+#include "elements/Lever.h"
 
 #include <kwee/kwee.h>
 
-enum class ArrowType
-{
-	Wire, DoubleWire, Block, Not, And, TreeWire
-};
-
 class Grid : public kwee::GameObject
 {
+	friend class GridSerializer;
+
 private:
 
 	glm::vec2 size_;
@@ -33,7 +31,7 @@ public:
 	void sendSignal(glm::ivec2 source, glm::ivec2 offset);
 	void simulate();
 
-	Grid(glm::vec2 size);
+	Grid(int size);
 	~Grid();
 
 	void update() override;

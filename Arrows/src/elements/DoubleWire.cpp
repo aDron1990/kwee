@@ -1,6 +1,6 @@
 #include "DoubleWire.h"
 
-DoubleWire::DoubleWire(Grid* grid, Direction dir) : Arrow(grid, dir, "doublewire_active", "doublewire_unactive")
+DoubleWire::DoubleWire(Grid* grid, Direction dir) : Arrow(grid, ArrowType::DoubleWire, dir, "doublewire_active", "doublewire_unactive")
 {
 
 }

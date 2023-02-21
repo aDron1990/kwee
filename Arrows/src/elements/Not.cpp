@@ -1,6 +1,6 @@
 #include "Not.h"
 
-Not::Not(Grid* grid, Direction dir) : Arrow(grid, dir, "not_active", "not_unactive")
+Not::Not(Grid* grid, Direction dir) : Arrow(grid, ArrowType::Not, dir, "not_active", "not_unactive")
 {
 
 }

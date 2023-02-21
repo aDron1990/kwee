@@ -1,6 +1,6 @@
 #include "And.h"
 
-And::And(Grid* grid, Direction dir) : Arrow(grid, dir, "and_active", "and_unactive")
+And::And(Grid* grid, Direction dir) : Arrow(grid, ArrowType::And, dir, "and_active", "and_unactive")
 {
 
 }

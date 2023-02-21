@@ -1,6 +1,6 @@
 #include "Wire.h"
 
-Wire::Wire(Grid* grid, Direction dir) : Arrow(grid, dir, "wire_active", "wire_unactive")
+Wire::Wire(Grid* grid, Direction dir) : Arrow(grid, ArrowType::Wire, dir, "wire_active", "wire_unactive")
 {
 
 }

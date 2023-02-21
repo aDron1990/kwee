@@ -14,7 +14,6 @@ kwee::Transformable::Transformable()
 
 void kwee::Transformable::updateMatrix()
 {
-
 	transformMatrix_ = glm::translate(glm::mat4(1.0f), position_);
 	transformMatrix_ = glm::rotate(transformMatrix_, rotation_.x, glm::vec3(1.0f, 0.0f, 0.0f));
 	transformMatrix_ = glm::rotate(transformMatrix_, rotation_.y, glm::vec3(0.0f, 1.0f, 0.0f));

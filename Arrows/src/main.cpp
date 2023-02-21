@@ -5,7 +5,7 @@
 #include <cmath>
 #include <iostream>
 
-const int speeds[] = { 25, 50, 100, 250, 500, 1000, 2000 };
+const int speeds[] = { 10, 25, 50, 100, 250, 500, 1000, 2000 };
 
 class Arrows : public kwee::Application
 {
@@ -14,7 +14,7 @@ private:
 	World* world;
 
 	long long int lastSimulation = 0;
-	int speed_i = 3;
+	int speed_i = 5;
 
 public:
 
@@ -48,6 +48,8 @@ Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 1)
 	kwee::ResourceManager::loadTexture("res/textures/and_unactive.png", "and_unactive");
 	kwee::ResourceManager::loadTexture("res/textures/treewire_active.png", "treewire_active");
 	kwee::ResourceManager::loadTexture("res/textures/treewire_unactive.png", "treewire_unactive");
+	kwee::ResourceManager::loadTexture("res/textures/lever_active.png", "lever_active");
+	kwee::ResourceManager::loadTexture("res/textures/lever_unactive.png", "lever_unactive");
 	kwee::ResourceManager::loadTexture("res/textures/block_active.png", "block_active");
 
 	world = new World;
@@ -141,6 +143,16 @@ void Arrows::mainInput()
 		world->grid->at = ArrowType::TreeWire;
 		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("treewire_active"));
 		std::cout << "selected TreeWire" << std::endl;
+	}
+	else if (kwee::Input::getKeyDown(GLFW_KEY_7))
+	{
+		world->grid->at = ArrowType::Lever;
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("lever_active"));
+		std::cout << "selected Lever" << std::endl;
+	}
+	if (kwee::Input::getKeyDown(GLFW_KEY_ENTER))
+	{
+
 	}
 }
 

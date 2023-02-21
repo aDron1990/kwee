@@ -3,18 +3,19 @@
 
 #include <iostream>
 
-Grid::Grid(glm::vec2 size) : GameObject(kwee::Color{1, 1, 1}), size_(size)
+Grid::Grid(int size) : GameObject(kwee::Color{1, 1, 1})
 {
 	alpha = 0.1;
-	setScale(size);
+	size_ = glm::ivec2(size, size);
+	setScale(size_);
 	createCollider(0, 1);
 	signals = new int*[size_.x];
 	arrows = new Arrow**[size_.x];
 
 	for (int i = 0; i < size_.x; i++)
 	{
-		signals[i] = new int[size.y];
-		arrows[i] = new Arrow * [size.y];
+		signals[i] = new int[size_.y];
+		arrows[i] = new Arrow * [size_.y];
 		for (int j = 0; j < size_.y; j++)
 		{
 			arrows[i][j] = nullptr;
@@ -95,7 +96,6 @@ void Grid::onMouseHover()
 
 		Arrow* arrow = createArrow(this, dir_);
 		arrow->setPosition(pos);
-		getOwnerScene()->addObject(arrow);
 		arrows[gridpos.x][gridpos.y] = arrow;
 	}
 	if (kwee::Input::getMouseButton(1))
@@ -104,12 +104,21 @@ void Grid::onMouseHover()
 		delete arrows[gridpos.x][gridpos.y];
 		arrows[gridpos.x][gridpos.y] = nullptr;
 	}
-	if (kwee::Input::getKeyDown(GLFW_KEY_SPACE))
+	if (kwee::Input::getMouseButtonDown(2))
 	{
 		glm::ivec2 gridpos = WorldToGrid(pos);
 		if (arrows[gridpos.x][gridpos.y] != nullptr)
 		{
-			arrows[gridpos.x][gridpos.y]->setState(!arrows[gridpos.x][gridpos.y]->getState());
+			arrows[gridpos.x][gridpos.y]->onClick();
+		}
+	}
+	if (kwee::Input::getKey(GLFW_KEY_SPACE))
+	{
+		glm::ivec2 gridpos = WorldToGrid(pos);
+		if (arrows[gridpos.x][gridpos.y] != nullptr)
+		{
+//			arrows[gridpos.x][gridpos.y]->setState(!arrows[gridpos.x][gridpos.y]->getState());
+			arrows[gridpos.x][gridpos.y]->setState(true);
 		}
 	}
 }
@@ -134,7 +143,8 @@ glm::ivec2 Grid::WorldToGrid(glm::vec2 worldCoords)
 void Grid::sendSignal(glm::ivec2 source, glm::ivec2 offset)
 {
 	glm::ivec2 destination = source + offset;
-	if (destination.x < size_.x && destination.y < size_.y)
+	if (destination.x < size_.x && destination.y < size_.y &&
+		destination.x >= 0 && destination.y >= 0)
 	{
 		signals[destination.x][destination.y]++;
 	}
@@ -156,7 +166,8 @@ void Grid::simulate()
 	{
 		for (int j = 0; j < size_.y; j++)
 		{
-			if (arrows[i][j] != nullptr) arrows[i][j]->setSignals(signals[i][j]);
+			if (arrows[i][j] != nullptr) 
+				arrows[i][j]->setSignals(signals[i][j]);
 			signals[i][j] = 0;
 		}
 	}
@@ -177,5 +188,6 @@ Arrow* Grid::createArrow(Grid* grid, Direction dir)
 	}
 	case ArrowType::And: return new And(grid, dir);
 	case ArrowType::TreeWire: return new TreeWire(grid, dir);
+	case ArrowType::Lever: return new Lever(grid, dir);
 	}
 }

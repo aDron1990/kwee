@@ -3,8 +3,10 @@
 
 #include <iostream>
 
-Arrow::Arrow(Grid* grid, Direction dir, std::string activeTextrureName, std::string unactiveTextrureName) : GameObject(unactiveTextrureName), dir_(dir), grid_(grid), state_(false)
+Arrow::Arrow(Grid* grid, ArrowType type, Direction dir, std::string activeTextrureName, std::string unactiveTextrureName) 
+	: GameObject(unactiveTextrureName), type_(type), dir_(dir), grid_(grid), state_(false)
 {
+	grid->getOwnerScene()->addObject(this);
 	activeTexture_ = kwee::ResourceManager::getTexture(activeTextrureName);
 	unactiveTexture_ = kwee::ResourceManager::getTexture(unactiveTextrureName);
 
@@ -50,4 +52,27 @@ Direction Arrow::getDir()
 void Arrow::action()
 {
 	
+}
+
+std::string TypeToString(ArrowType type)
+{
+	switch (type)
+	{
+	case ArrowType::Wire:		return "Wire";
+	case ArrowType::DoubleWire: return "DoubleWire";
+	case ArrowType::Block:		return "Block";
+	case ArrowType::Not:		return "Not";
+	case ArrowType::And:		return "And";
+	case ArrowType::TreeWire:	return "TreeWire";
+	}
+}
+
+ArrowType StringToType(std::string str)
+{
+	if (str == "Wire")			return ArrowType::Wire;
+	if (str == "DoubleWire")	return ArrowType::DoubleWire;
+	if (str == "Block")			return ArrowType::Block;
+	if (str == "Not")			return ArrowType::Not;
+	if (str == "And")			return ArrowType::And;
+	if (str == "TreeWire")		return ArrowType::TreeWire;
 }

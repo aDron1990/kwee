@@ -1,6 +1,6 @@
 #include "TreeWire.h"
 
-TreeWire::TreeWire(Grid* grid, Direction dir) : Arrow(grid, dir, "treewire_active", "treewire_unactive")
+TreeWire::TreeWire(Grid* grid, Direction dir) : Arrow(grid, ArrowType::TreeWire, dir, "treewire_active", "treewire_unactive")
 {
 
 }

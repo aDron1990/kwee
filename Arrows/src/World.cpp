@@ -6,7 +6,7 @@ World::World()
 	mainCamera = new kwee::Camera(glm::vec4(0, 0, kwee::Application::getInstance()->getWindowSize()));
 	mainCamera->setScale(glm::vec2(0.1f, 0.1f));
 
-	grid = new Grid{ {100, 100} };
+	grid = new Grid{ 250 };
 	addObject(grid);
 
 	phantomArrow = new kwee::GameObject("wire_active");

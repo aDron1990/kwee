@@ -2,6 +2,14 @@
 
 #include <kwee/kwee.h>
 
+enum class ArrowType
+{
+	Wire = 1, DoubleWire = 2, Block = 3, Not = 4, And = 5, TreeWire = 6, Lever = 7
+};
+
+std::string TypeToString(ArrowType type);
+ArrowType StringToType(std::string str);
+
 class Direction
 {
 private:
@@ -50,12 +58,15 @@ public:
 class Grid;
 class Arrow : public kwee::GameObject
 {
+	friend class GridSerializer;
+
 private:
 
 	Grid* grid_;
 	bool state_;
 
 	Direction dir_;
+	ArrowType type_;
 
 	std::shared_ptr<kwee::Texture> activeTexture_;
 	std::shared_ptr<kwee::Texture> unactiveTexture_;
@@ -66,7 +77,7 @@ protected:
 
 public:
 
-	Arrow(Grid* grid, Direction dir, std::string activeTextrureName, std::string unactiveTextrureName);
+	Arrow(Grid* grid, ArrowType type, Direction dir, std::string activeTextrureName, std::string unactiveTextrureName);
 
 	void setState(bool state);
 	bool getState();
@@ -79,5 +90,6 @@ public:
 	Direction getDir();
 
 	virtual void action();
+	virtual void onClick() {};
 };
 
