@@ -14,11 +14,11 @@ namespace kwee
 		glm::mat4 projection_;
 		glm::vec4 viewport_;
 		float aspect_;
-		~Camera(){};
 
 	public:
 
 		Camera(glm::vec4 viewport);
+		~Camera() = default;
 
 		void setVieport(glm::vec4 viewport);
 

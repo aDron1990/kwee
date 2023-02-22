@@ -50,7 +50,8 @@ void kwee::PhysicEngine::update()
 	delta = ((double)(time.QuadPart / (freq / 10000) - lastUpdateTime / (freq / 10000)) + 1) / 10000.0;
 	lastUpdateTime = time.QuadPart / (freq / 10000);
 
-	glm::vec2 mousePos = Application::getInstance()->getScene()->getCamera()->ScreenToWorld(Input::getMousePosition());
+	kwee::Camera* cam = Application::getInstance()->getScene()->getCamera();
+	glm::vec2 mousePos = cam->ScreenToWorld(Input::getMousePosition());
 //	glm::vec2 mousePos = { 0.6, 0.6 };
 
 	for (int i = 0; i < colliders_.size(); i++)

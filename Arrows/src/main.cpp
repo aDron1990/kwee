@@ -1,43 +1,18 @@
-#include "World.h"
+#include "main.h"
 
-#include <kwee/kwee.h>
 #include <kwee/core/EntryPoint.h>
 #include <cmath>
 #include <iostream>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/foreach.hpp>
-
-const int speeds[] = { 10, 25, 50, 100, 250, 500, 1000, 2000 };
-
-class Arrows : public kwee::Application
-{
-private:
-
-	World* world;
-
-	long long int lastSimulation = 0;
-	int speed_i = 5;
-
-public:
-
-	Arrows();
-	~Arrows();
-
-	void update() override;
-	void cameraInput();
-	void mainInput();
-	void save();
-
-	void onWindowClose();
-};
+#include <filesystem>
+#include <Windows.h>
 
 kwee::Application* kwee::CreateApplication()
 {
 	return new Arrows;
 }
-
-
 
 Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 1)
 {
@@ -57,6 +32,15 @@ Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 1)
 
 	world = new World;
 	loadScene(world);
+
+	if (std::filesystem::exists("save.json"))
+	{
+		load();
+	}
+	else
+	{
+		std::cout << "save file not found, generated new world" << std::endl;
+	}
 	lastSimulation = kwee::PhysicEngine::millis();
 }
 
@@ -67,14 +51,14 @@ Arrows::~Arrows()
 
 void Arrows::update()
 {
-	mainInput();
-	cameraInput();
-	
 	if (kwee::PhysicEngine::millis() - lastSimulation > speeds[speed_i])
 	{
 		lastSimulation = kwee::PhysicEngine::millis();
 		world->grid->simulate();
 	}
+	
+	cameraInput();
+	mainInput();
 }
 
 void Arrows::cameraInput()
@@ -197,4 +181,37 @@ void Arrows::save()
 
 	saveTree.add_child("grid", gridTree);
 	boost::property_tree::write_json("save.json", saveTree);
+
+	std::cout << "world saved" << std::endl;
+}
+
+void Arrows::load()
+{
+	boost::property_tree::ptree saveTree;
+	boost::property_tree::read_json("save.json", saveTree);
+	Grid* grid = new Grid{ saveTree.get<int>("size") };
+	world->grid = grid;
+	world->addObject(grid);
+	for (int j = 0; j < grid->getSize().y; j++)
+	{
+		for (int i = 0; i < grid->getSize().x; i++)
+		{
+
+			boost::optional<int> opt = saveTree.get_optional<int>("grid." + std::to_string((int)(grid->getSize().x * j) + i));
+			if (!opt.has_value())
+			{
+				Arrow* arrow = grid->createArrow(grid,
+					StringToType(saveTree.get<std::string>("grid." + std::to_string((int)(grid->getSize().x * j) + i) + ".type")),
+					StringToDir(saveTree.get<std::string>("grid." + std::to_string((int)(grid->getSize().x * j) + i) + ".direction")));
+				arrow->setPosition(grid->GridToWorld({ i, j }));
+				grid->arrows[i][j] = arrow;
+			}
+			else
+			{
+				grid->arrows[i][j] = nullptr;
+			}
+		}
+	}
+
+	std::cout << "save file loaded" << std::endl;
 }

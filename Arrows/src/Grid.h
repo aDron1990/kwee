@@ -35,6 +35,7 @@ public:
 	~Grid();
 
 	void update() override;
+	void clear();
 
 	void onMouseHover() override;
 	void onMouseHoverEnter() override;

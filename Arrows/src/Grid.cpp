@@ -1,3 +1,4 @@
+
 #include "Grid.h"
 #include "World.h"
 
@@ -26,11 +27,13 @@ Grid::Grid(int size) : GameObject(kwee::Color{1, 1, 1})
 
 Grid::~Grid()
 {
+	deleteCollider();
 	for (int i = 0; i < size_.x; i++)
 	{
 		for (int j = 0; j < size_.y; j++)
 		{
 			delete arrows[i][j];
+			arrows[i][j] = nullptr;
 		}
 
 		delete[] signals[i];
@@ -39,6 +42,18 @@ Grid::~Grid()
 
 	delete[] signals;
 	delete[] arrows;
+}
+
+void Grid::clear()
+{
+	for (int i = 0; i < size_.x; i++)
+	{
+		for (int j = 0; j < size_.y; j++)
+		{
+			delete arrows[i][j];
+			arrows[i][j] = nullptr;
+		}
+	}
 }
 
 void Grid::update()
@@ -88,7 +103,7 @@ void Grid::onMouseHover()
 	if (kwee::Input::getMouseButton(0))
 	{
 		glm::ivec2 gridpos = WorldToGrid(pos);
-		if (arrows[gridpos.x][gridpos.y] != nullptr)
+		if (arrows[gridpos.x][gridpos.y] != 0)
 		{
 			delete arrows[gridpos.x][gridpos.y];
 			arrows[gridpos.x][gridpos.y] = nullptr;
@@ -117,7 +132,6 @@ void Grid::onMouseHover()
 		glm::ivec2 gridpos = WorldToGrid(pos);
 		if (arrows[gridpos.x][gridpos.y] != nullptr)
 		{
-//			arrows[gridpos.x][gridpos.y]->setState(!arrows[gridpos.x][gridpos.y]->getState());
 			arrows[gridpos.x][gridpos.y]->setState(true);
 		}
 	}
@@ -157,8 +171,6 @@ void Grid::sendSignal(glm::ivec2 source, glm::ivec2 offset)
 
 void Grid::simulate()
 {
-//	std::cout << "simulate" << std::endl;
-
 	for (int i = 0; i < size_.x; i++)
 	{
 		for (int j = 0; j < size_.y; j++)

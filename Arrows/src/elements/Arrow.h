@@ -81,6 +81,7 @@ protected:
 public:
 
 	Arrow(Grid* grid, ArrowType type, Direction dir, std::string activeTextrureName, std::string unactiveTextrureName);
+	virtual ~Arrow() = default;
 
 	void setState(bool state);
 	bool getState();

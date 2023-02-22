@@ -29,8 +29,6 @@ namespace kwee
 
 	protected:
 
-		virtual ~GameObject();
-
 	public:
 
 		Color color = { 0, 0, 0 };
@@ -52,6 +50,7 @@ namespace kwee
 
 		GameObject(kwee::Color color);
 		GameObject(std::string textureName);
+		virtual ~GameObject();
 
 		void setOwnerScene(Scene* owner);
 		Scene* getOwnerScene();
