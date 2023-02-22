@@ -55,6 +55,9 @@ public:
 	}
 };
 
+std::string DirToString(Direction dir);
+Direction StringToDir(std::string str);
+
 class Grid;
 class Arrow : public kwee::GameObject
 {
@@ -88,6 +91,7 @@ public:
 	void rotate_minus();
 
 	Direction getDir();
+	ArrowType getType();
 
 	virtual void action();
 	virtual void onClick() {};

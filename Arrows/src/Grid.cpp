@@ -94,7 +94,7 @@ void Grid::onMouseHover()
 			arrows[gridpos.x][gridpos.y] = nullptr;
 		}
 
-		Arrow* arrow = createArrow(this, dir_);
+		Arrow* arrow = createArrow(this, at, dir_);
 		arrow->setPosition(pos);
 		arrows[gridpos.x][gridpos.y] = arrow;
 	}
@@ -140,6 +140,11 @@ glm::ivec2 Grid::WorldToGrid(glm::vec2 worldCoords)
 	return worldCoords + size_ / 2.0f;
 }
 
+glm::vec2 Grid::GridToWorld(glm::vec2 gridCoords)
+{
+	return (gridCoords - size_ / 2.0f) + 0.5f;
+}
+
 void Grid::sendSignal(glm::ivec2 source, glm::ivec2 offset)
 {
 	glm::ivec2 destination = source + offset;
@@ -173,7 +178,7 @@ void Grid::simulate()
 	}
 }
 
-Arrow* Grid::createArrow(Grid* grid, Direction dir)
+Arrow* Grid::createArrow(Grid* grid, ArrowType at, Direction dir)
 {
 	switch (at)
 	{
@@ -190,4 +195,9 @@ Arrow* Grid::createArrow(Grid* grid, Direction dir)
 	case ArrowType::TreeWire: return new TreeWire(grid, dir);
 	case ArrowType::Lever: return new Lever(grid, dir);
 	}
+}
+
+glm::vec2 Grid::getSize()
+{
+	return size_;
 }

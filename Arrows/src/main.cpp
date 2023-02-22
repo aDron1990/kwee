@@ -4,6 +4,9 @@
 #include <kwee/core/EntryPoint.h>
 #include <cmath>
 #include <iostream>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/foreach.hpp>
 
 const int speeds[] = { 10, 25, 50, 100, 250, 500, 1000, 2000 };
 
@@ -24,6 +27,7 @@ public:
 	void update() override;
 	void cameraInput();
 	void mainInput();
+	void save();
 
 	void onWindowClose();
 };
@@ -37,7 +41,6 @@ kwee::Application* kwee::CreateApplication()
 
 Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 1)
 {
-	kwee::ResourceManager::loadTexture("res/textures/phantom.png", "phantom");
 	kwee::ResourceManager::loadTexture("res/textures/wire_active.png", "wire_active");
 	kwee::ResourceManager::loadTexture("res/textures/wire_unactive.png", "wire_unactive");
 	kwee::ResourceManager::loadTexture("res/textures/doublewire_active.png", "doublewire_active");
@@ -152,12 +155,46 @@ void Arrows::mainInput()
 	}
 	if (kwee::Input::getKeyDown(GLFW_KEY_ENTER))
 	{
-
+		save();
 	}
 }
 
 void Arrows::onWindowClose()
 {
+	save();
 	close();
 }
 
+void Arrows::save()
+{
+	boost::property_tree::ptree saveTree;
+	boost::property_tree::ptree gridTree;
+	saveTree.put<int>("size", world->grid->getScale().x);
+
+	try
+	{
+		for (int j = 0; j < world->grid->getSize().y; j++)
+		{
+			for (int i = 0; i < world->grid->getSize().x; i++)
+			{
+				if (world->grid->arrows[i][j] == nullptr)
+				{
+					gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i), 0);
+				}
+				else
+				{
+					gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i) + ".type", TypeToString(world->grid->arrows[i][j]->getType()));
+					gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i) + ".direction",
+						DirToString(world->grid->arrows[i][j]->getDir()));
+				}
+			}
+		}
+	}
+	catch (std::exception ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
+
+	saveTree.add_child("grid", gridTree);
+	boost::property_tree::write_json("save.json", saveTree);
+}

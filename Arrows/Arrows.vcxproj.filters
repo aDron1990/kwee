@@ -81,4 +81,48 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\and_active.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\and_unactive.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\block_active.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\doublewire_active.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\doublewire_unactive.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\lever_active.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\lever_unactive.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\not_active.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\not_unactive.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\treewire_active.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\treewire_unactive.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\wire_active.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\textures\wire_unactive.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="icon.ico">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

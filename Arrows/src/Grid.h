@@ -13,7 +13,7 @@
 
 class Grid : public kwee::GameObject
 {
-	friend class GridSerializer;
+	friend class Arrows;
 
 private:
 
@@ -41,6 +41,9 @@ public:
 	void onMouseHoverExit() override;
 
 	glm::ivec2 WorldToGrid(glm::vec2 worldCoords);
-	Arrow* createArrow(Grid* grid, Direction dir);
+	glm::vec2 GridToWorld(glm::vec2 gridCoords);
+	Arrow* createArrow(Grid* grid, ArrowType at, Direction dir);
+
+	glm::vec2 getSize();
 };
 

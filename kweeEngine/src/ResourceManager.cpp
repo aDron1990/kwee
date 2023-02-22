@@ -75,7 +75,7 @@ void kwee::ResourceManager::loadTexture(const std::string textureFilePath, const
     }
     else
     {
-        std::cout << "ERROR::TEXTURE::FILE_NOT_SUCCESFULLY_READ: " << stbi_failure_reason() << std::endl;
+        std::cout << "ERROR::TEXTURE::FILE_NOT_SUCCESFULLY_READ: " << textureFilePath+"\n" << stbi_failure_reason() << std::endl;
     }
     stbi_image_free(data);
 }

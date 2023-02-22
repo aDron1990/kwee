@@ -112,7 +112,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)kweeEngine\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)kweeEngine\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,7 +128,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)kweeEngine\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)kweeEngine\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,6 +167,22 @@
     <ClInclude Include="src\World.h" />
     <ClInclude Include="src\elements\Wire.h" />
     <ClInclude Include="src\elements\TreeWire.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
+    <Image Include="res\textures\and_active.png" />
+    <Image Include="res\textures\and_unactive.png" />
+    <Image Include="res\textures\block_active.png" />
+    <Image Include="res\textures\doublewire_active.png" />
+    <Image Include="res\textures\doublewire_unactive.png" />
+    <Image Include="res\textures\lever_active.png" />
+    <Image Include="res\textures\lever_unactive.png" />
+    <Image Include="res\textures\not_active.png" />
+    <Image Include="res\textures\not_unactive.png" />
+    <Image Include="res\textures\treewire_active.png" />
+    <Image Include="res\textures\treewire_unactive.png" />
+    <Image Include="res\textures\wire_active.png" />
+    <Image Include="res\textures\wire_unactive.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -54,6 +54,11 @@ void Arrow::action()
 	
 }
 
+ArrowType Arrow::getType()
+{
+	return type_;
+}
+
 std::string TypeToString(ArrowType type)
 {
 	switch (type)
@@ -75,4 +80,20 @@ ArrowType StringToType(std::string str)
 	if (str == "Not")			return ArrowType::Not;
 	if (str == "And")			return ArrowType::And;
 	if (str == "TreeWire")		return ArrowType::TreeWire;
+}
+
+std::string DirToString(Direction dir)
+{
+	if (dir.getDegrees() == 0)		return "Up";
+	if (dir.getDegrees() == 90)		return "Left";
+	if (dir.getDegrees() == 180)	return "Down";
+	if (dir.getDegrees() == 270)	return "Right";
+}
+
+Direction StringToDir(std::string str)
+{
+	if (str == "Up")		return Direction{ 0 };
+	if (str == "Left")		return Direction{ 1 };
+	if (str == "Down")		return Direction{ 2 };
+	if (str == "Right")		return Direction{ 3 };
 }
