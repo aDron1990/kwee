@@ -120,7 +120,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>robocopy $(ProjectDir)res $(SolutionDir)bin\$(Configuration)\ /s /e
+      <Command>robocopy $(ProjectDir)res $(SolutionDir)bin\$(Configuration)\res\ /s /e
 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -142,7 +142,7 @@ exit 0</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>robocopy $(ProjectDir)res $(SolutionDir)bin\$(Configuration)\ /s /e
+      <Command>robocopy $(ProjectDir)res $(SolutionDir)bin\$(Configuration)\res\ /s /e
 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
