@@ -7,7 +7,7 @@
 
 namespace kwee
 {
-	class KWEEAPI Camera : public Transformable
+	class KWEEAPI Camera
 	{
 	private:
 
@@ -15,10 +15,27 @@ namespace kwee
 		glm::vec4 viewport_;
 		float aspect_;
 
+		glm::mat4 transformMatrix_;
+
+		glm::vec3 position_;
+		glm::vec3 rotation_;
+		glm::vec3 scale_;
+
+		void updateMatrix();
+
 	public:
 
 		Camera(glm::vec4 viewport);
 		~Camera() = default;
+
+		void setPosition(glm::vec2 value);
+		void setRotation(float value);
+		void setScale(glm::vec2 value);
+
+		glm::vec2 getPosition() const;
+		float getRotation() const;
+		glm::vec2 getScale() const;
+		glm::mat4 getTransformMatrix() const;
 
 		void setVieport(glm::vec4 viewport);
 

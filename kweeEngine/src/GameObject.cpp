@@ -10,6 +10,7 @@ kwee::GameObject::GameObject(Color color) : color(color)
 	shader_ = ResourceManager::getShader("colored");
 	textured_ = false;
 	std::cout << "GameObject()" << std::endl;
+	owner_ = 0;
 }
 
 kwee::GameObject::GameObject(std::string textureName)
@@ -18,11 +19,12 @@ kwee::GameObject::GameObject(std::string textureName)
 	shader_ = ResourceManager::getShader("textured");
 	texture_ = ResourceManager::getTexture(textureName);
 	textured_ = true;
+	owner_ = 0;
 }
 
 kwee::GameObject::~GameObject()
 {
-	owner_->removeObject(this);
+	if (owner_ != 0) owner_->removeObject(this);
 	deleteCollider();
 }
 

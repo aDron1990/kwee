@@ -33,13 +33,11 @@ Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 0)
 	world = new World;
 	loadScene(world);
 
-	OPENFILENAME ofn;       // common dialog box structure
-	TCHAR szFile[260] = { 0 };       // if using TCHAR macros
+	OPENFILENAME ofn;
+	TCHAR szFile[260] = { 0 };
 
-	// Initialize OPENFILENAME
 	ZeroMemory(&ofn, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
-	//	ofn.hwndOwner = hWnd;
 	ofn.lpstrFile = szFile;
 	ofn.nMaxFile = sizeof(szFile);
 	ofn.lpstrFilter = ".json\0*.json\0";
@@ -48,7 +46,6 @@ Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 0)
 	ofn.nMaxFileTitle = 0;
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 	ofn.lpstrInitialDir = ".\\saves\\";
-//	ofn.lpstrFile = (LPSTR)"save.json";
 
 	if (GetOpenFileName(&ofn) == TRUE)
 	{
@@ -91,16 +88,16 @@ void Arrows::cameraInput()
 		world->mainCamera->setScale(world->mainCamera->getScale() /= glm::abs((float)kwee::Input::getMouseWheelScroll().y) * 1.1);
 	if (kwee::Input::getKey(GLFW_KEY_W))
 		world->mainCamera->setPosition(world->mainCamera->getPosition() +
-			glm::vec2{ 0, -1 } *(float)kwee::PhysicEngine::getDelta());
+			glm::vec2{ 0, -50 } / (float)world->mainCamera->getScale().length() * (float)kwee::PhysicEngine::getDelta());
 	if (kwee::Input::getKey(GLFW_KEY_S))
 		world->mainCamera->setPosition(world->mainCamera->getPosition() +
-			glm::vec2{ 0,  1 } *(float)kwee::PhysicEngine::getDelta());
+			glm::vec2{ 0,  50 } / (float)world->mainCamera->getScale().length() * (float)kwee::PhysicEngine::getDelta());
 	if (kwee::Input::getKey(GLFW_KEY_A))
 		world->mainCamera->setPosition(world->mainCamera->getPosition() +
-			glm::vec2{ 1,  0 } *(float)kwee::PhysicEngine::getDelta());
+			glm::vec2{ 50,  0 } / (float)world->mainCamera->getScale().length() * (float)kwee::PhysicEngine::getDelta());
 	if (kwee::Input::getKey(GLFW_KEY_D))
 		world->mainCamera->setPosition(world->mainCamera->getPosition() +
-			glm::vec2{ -1, 0 } *(float)kwee::PhysicEngine::getDelta());
+			glm::vec2{ -50, 0 } / (float)world->mainCamera->getScale().length() * (float)kwee::PhysicEngine::getDelta());
 }
 
 void Arrows::mainInput()
