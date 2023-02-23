@@ -28,6 +28,8 @@ void kwee::Scene::draw()
 	{
 		objects_[i]->draw(viewMatrix, projectionMatrix);
 	}
+
+	onDraw();
 }
 
 void kwee::Scene::update()

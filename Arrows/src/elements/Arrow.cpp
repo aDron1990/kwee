@@ -69,6 +69,7 @@ std::string TypeToString(ArrowType type)
 	case ArrowType::Not:		return "Not";
 	case ArrowType::And:		return "And";
 	case ArrowType::TreeWire:	return "TreeWire";
+	case ArrowType::Lever:		return "Lever";
 	}
 }
 
@@ -80,6 +81,7 @@ ArrowType StringToType(std::string str)
 	if (str == "Not")			return ArrowType::Not;
 	if (str == "And")			return ArrowType::And;
 	if (str == "TreeWire")		return ArrowType::TreeWire;
+	if (str == "Lever")			return ArrowType::Lever;
 }
 
 std::string DirToString(Direction dir)

@@ -1,6 +1,6 @@
 #include "Lever.h"
 
-Lever::Lever(Grid* grid, Direction dir) : Arrow(grid, ArrowType::Wire, dir, "lever_unactive", "lever_unactive")
+Lever::Lever(Grid* grid, Direction dir) : Arrow(grid, ArrowType::Lever, dir, "lever_unactive", "lever_unactive")
 {
 	active = kwee::ResourceManager::getTexture("lever_active");
 	unactive = kwee::ResourceManager::getTexture("lever_unactive");

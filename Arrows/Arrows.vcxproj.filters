@@ -48,6 +48,9 @@
     <ClCompile Include="src\elements\Lever.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\ArrowUIButton.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\World.h">
@@ -81,6 +84,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\main.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArrowUIButton.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

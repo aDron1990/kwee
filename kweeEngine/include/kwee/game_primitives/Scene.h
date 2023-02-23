@@ -13,9 +13,9 @@ namespace kwee
 	{
 	private:
 
-		std::vector<GameObject*> objects_;
-
 	protected:
+
+		std::vector<GameObject*> objects_;
 
 	public:
 
@@ -25,6 +25,8 @@ namespace kwee
 
 		Scene();
 		virtual ~Scene();
+
+		virtual void onDraw() {};
 
 		void draw();
 		void update();

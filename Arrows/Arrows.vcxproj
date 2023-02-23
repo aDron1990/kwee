@@ -147,6 +147,7 @@ exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ArrowUIButton.cpp" />
     <ClCompile Include="src\elements\Lever.cpp" />
     <ClCompile Include="src\elements\And.cpp" />
     <ClCompile Include="src\elements\Not.cpp" />
@@ -165,6 +166,7 @@ exit 0</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ArrowUIButton.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\elements\Lever.h" />
     <ClInclude Include="src\elements\And.h" />

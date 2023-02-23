@@ -25,7 +25,7 @@ public:
 	void mainInput();
 
 	void save();
-	void load();
+	void load(std::string filePath);
 
 	void onWindowClose();
 };

@@ -14,7 +14,7 @@ kwee::Application* kwee::CreateApplication()
 	return new Arrows;
 }
 
-Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 1)
+Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 0)
 {
 	kwee::ResourceManager::loadTexture("res/textures/wire_active.png", "wire_active");
 	kwee::ResourceManager::loadTexture("res/textures/wire_unactive.png", "wire_unactive");
@@ -33,14 +33,36 @@ Arrows::Arrows() : Application(glm::vec2{ 1280, 720 }, "Arrows", 1)
 	world = new World;
 	loadScene(world);
 
-	if (std::filesystem::exists("save.json"))
+	OPENFILENAME ofn;       // common dialog box structure
+	TCHAR szFile[260] = { 0 };       // if using TCHAR macros
+
+	// Initialize OPENFILENAME
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	//	ofn.hwndOwner = hWnd;
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrFilter = ".json\0*.json\0";
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	ofn.lpstrInitialDir = ".\\saves\\";
+//	ofn.lpstrFile = (LPSTR)"save.json";
+
+	if (GetOpenFileName(&ofn) == TRUE)
 	{
-		load();
+		delete world->grid;
+		std::cout << ofn.lpstrFile << std::endl;
+		load(ofn.lpstrFile);
 	}
 	else
 	{
 		std::cout << "save file not found, generated new world" << std::endl;
 	}
+
+	world->buttons[0]->mix = 0;
+
 	lastSimulation = kwee::PhysicEngine::millis();
 }
 
@@ -98,43 +120,78 @@ void Arrows::mainInput()
 	if (kwee::Input::getKeyDown(GLFW_KEY_1))
 	{
 		world->grid->at = ArrowType::Wire;
-		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("wire_active"));
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("wire_unactive"));
+		for (int i = 0; i < world->buttons.size(); i++)
+		{
+			if (world->buttons[i]->type == ArrowType::Wire) world->buttons[i]->mix = 0;
+			else world->buttons[i]->mix = 0.3;
+		}
 		std::cout << "selected Wire" << std::endl;
 	}
 	else if (kwee::Input::getKeyDown(GLFW_KEY_2))
 	{
 		world->grid->at = ArrowType::DoubleWire;
-		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("doublewire_active"));
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("doublewire_unactive"));
+		for (int i = 0; i < world->buttons.size(); i++)
+		{
+			if (world->buttons[i]->type == ArrowType::DoubleWire) world->buttons[i]->mix = 0;
+			else world->buttons[i]->mix = 0.3;
+		}
 		std::cout << "selected DoubleWire" << std::endl;
 	}
 	else if (kwee::Input::getKeyDown(GLFW_KEY_3))
 	{
 		world->grid->at = ArrowType::Block;
 		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("block_active"));
+		for (int i = 0; i < world->buttons.size(); i++)
+		{
+			if (world->buttons[i]->type == ArrowType::Block) world->buttons[i]->mix = 0;
+			else world->buttons[i]->mix = 0.3;
+		}
 		std::cout << "selected Block" << std::endl;
 	}
 	else if (kwee::Input::getKeyDown(GLFW_KEY_4))
 	{
 		world->grid->at = ArrowType::Not;
-		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("not_active"));
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("not_unactive"));
+		for (int i = 0; i < world->buttons.size(); i++)
+		{
+			if (world->buttons[i]->type == ArrowType::Not) world->buttons[i]->mix = 0;
+			else world->buttons[i]->mix = 0.3;
+		}
 		std::cout << "selected Not" << std::endl;
 	}
 	else if (kwee::Input::getKeyDown(GLFW_KEY_5))
 	{
 		world->grid->at = ArrowType::And;
-		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("and_active"));
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("and_unactive"));
+		for (int i = 0; i < world->buttons.size(); i++)
+		{
+			if (world->buttons[i]->type == ArrowType::And) world->buttons[i]->mix = 0;
+			else world->buttons[i]->mix = 0.3;
+		}
 		std::cout << "selected And" << std::endl;
 	}
 	else if (kwee::Input::getKeyDown(GLFW_KEY_6))
 	{
 		world->grid->at = ArrowType::TreeWire;
-		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("treewire_active"));
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("treewire_unactive"));
+		for (int i = 0; i < world->buttons.size(); i++)
+		{
+			if (world->buttons[i]->type == ArrowType::TreeWire) world->buttons[i]->mix = 0;
+			else world->buttons[i]->mix = 0.3;
+		}
 		std::cout << "selected TreeWire" << std::endl;
 	}
 	else if (kwee::Input::getKeyDown(GLFW_KEY_7))
 	{
 		world->grid->at = ArrowType::Lever;
-		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("lever_active"));
+		world->phantomArrow->setTexture(kwee::ResourceManager::getTexture("lever_unactive"));
+		for (int i = 0; i < world->buttons.size(); i++)
+		{
+			if (world->buttons[i]->type == ArrowType::Lever) world->buttons[i]->mix = 0;
+			else world->buttons[i]->mix = 0.3;
+		}
 		std::cout << "selected Lever" << std::endl;
 	}
 	if (kwee::Input::getKeyDown(GLFW_KEY_ENTER))
@@ -151,44 +208,68 @@ void Arrows::onWindowClose()
 
 void Arrows::save()
 {
-	boost::property_tree::ptree saveTree;
-	boost::property_tree::ptree gridTree;
-	saveTree.put<int>("size", world->grid->getScale().x);
+	OPENFILENAME ofn;       // common dialog box structure
+	TCHAR szFile[260] = { 0 };       // if using TCHAR macros
 
-	try
+	// Initialize OPENFILENAME
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	//	ofn.hwndOwner = hWnd;
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrFilter = ".json\0*.json\0";
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	ofn.lpstrInitialDir = ".\\saves\\";
+
+	if (GetSaveFileName(&ofn) == TRUE)
 	{
-		for (int j = 0; j < world->grid->getSize().y; j++)
+		std::cout << ofn.lpstrFile << std::endl;
+		boost::property_tree::ptree saveTree;
+		boost::property_tree::ptree gridTree;
+		saveTree.put<int>("size", world->grid->getScale().x);
+
+		try
 		{
-			for (int i = 0; i < world->grid->getSize().x; i++)
+			for (int j = 0; j < world->grid->getSize().y; j++)
 			{
-				if (world->grid->arrows[i][j] == nullptr)
+				for (int i = 0; i < world->grid->getSize().x; i++)
 				{
-					gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i), 0);
-				}
-				else
-				{
-					gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i) + ".type", TypeToString(world->grid->arrows[i][j]->getType()));
-					gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i) + ".direction",
-						DirToString(world->grid->arrows[i][j]->getDir()));
+					if (world->grid->arrows[i][j] == nullptr)
+					{
+						gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i), 0);
+					}
+					else
+					{
+						gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i) + ".type", TypeToString(world->grid->arrows[i][j]->getType()));
+						gridTree.put(std::to_string((int)(world->grid->getSize().x * j) + i) + ".direction",
+							DirToString(world->grid->arrows[i][j]->getDir()));
+					}
 				}
 			}
 		}
+		catch (std::exception ex)
+		{
+			std::cout << ex.what() << std::endl;
+		}
+
+		saveTree.add_child("grid", gridTree);
+		boost::property_tree::write_json(ofn.lpstrFile, saveTree);
+
+		std::cout << "world saved" << std::endl;
 	}
-	catch (std::exception ex)
+	else
 	{
-		std::cout << ex.what() << std::endl;
+		std::cout << "world not saved" << std::endl;
 	}
-
-	saveTree.add_child("grid", gridTree);
-	boost::property_tree::write_json("save.json", saveTree);
-
-	std::cout << "world saved" << std::endl;
 }
 
-void Arrows::load()
+void Arrows::load(std::string filePath)
 {
 	boost::property_tree::ptree saveTree;
-	boost::property_tree::read_json("save.json", saveTree);
+	boost::property_tree::read_json(filePath, saveTree);
 	Grid* grid = new Grid{ saveTree.get<int>("size") };
 	world->grid = grid;
 	world->addObject(grid);
