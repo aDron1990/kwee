@@ -40,8 +40,9 @@ void kwee::PhysicEngine::removeCollider(Collider* c)
 
 void kwee::PhysicEngine::update()
 {
-	delta = ((double) (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - lastUpdateTime)).count() / 100);
-	lastUpdateTime = std::chrono::high_resolution_clock::now();
+	delta = ((double) (std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - lastUpdateTime)).count() / 1000000);
+
+
 	auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(lastUpdateTime);
 	auto value = std::chrono::duration_cast<std::chrono::milliseconds>(now_ms.time_since_epoch());
 	milli = value.count();
@@ -123,6 +124,8 @@ void kwee::PhysicEngine::update()
 			}
 		}
 	}
+
+	lastUpdateTime = std::chrono::high_resolution_clock::now();
 }
 
 void kwee::PhysicEngine::removeRequiedObjects()
