@@ -3,6 +3,7 @@
 #include "kwee/game_primitives/Collider.h"
 
 #include <vector>
+#include <chrono>
 
 namespace kwee
 {
@@ -56,8 +57,7 @@ namespace kwee
 
 		static void removeRequiedObjects();
 
-		static long long lastUpdateTime;
-		static long long freq;
+		static std::chrono::steady_clock::time_point lastUpdateTime;
 		static double delta;
 
 	public:

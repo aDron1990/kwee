@@ -2,7 +2,6 @@
 #include "kwee/systems/ResourceManager.h"
 #include "kwee/systems/PhysicEngine.h"
 
-#include <Windows.h>
 #include <iostream>
 
 kwee::Application* kwee::Application::instance_ = 0;
@@ -12,13 +11,6 @@ void framebuffersize_callback(GLFWwindow* window, int width, int height);
 
 kwee::Application::Application(glm::vec2 windowSize, std::string windowName, bool allocConsole) : windowSize_(windowSize)
 {
-	if (!allocConsole)
-	{
-		HWND wnd = GetConsoleWindow();
-		FreeConsole();
-		PostMessage(wnd, WM_CLOSE, 0, 0);
-	}
-
 	running_ = true;
 	instance_ = this;
 	if(glfwInit() == 0) throw;

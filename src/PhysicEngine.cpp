@@ -5,25 +5,17 @@
 
 #include <ctime>
 #include <algorithm>
-#include <Windows.h>
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 
 std::vector<kwee::Collider*> kwee::PhysicEngine::colliders_ = std::vector<kwee::Collider*>();
 std::vector<int>  kwee::PhysicEngine::requiedToRemoveCollidersIds_ = std::vector<int>();
-long long kwee::PhysicEngine::lastUpdateTime = 0;
+std::chrono::steady_clock::time_point kwee::PhysicEngine::lastUpdateTime = std::chrono::steady_clock::time_point();
 double kwee::PhysicEngine::delta = 0;
-long long kwee::PhysicEngine::freq = 0;
 
 void kwee::PhysicEngine::initialize()
 {
-	LARGE_INTEGER frequency;
-	QueryPerformanceFrequency(&frequency);
-	freq = frequency.QuadPart;
-	
-	LARGE_INTEGER time;
-	QueryPerformanceCounter(&time);
-	lastUpdateTime = time.QuadPart;
+    lastUpdateTime = std::chrono::high_resolution_clock::now();
 }
 
 void kwee::PhysicEngine::addCollider(Collider* c)
@@ -44,11 +36,9 @@ void kwee::PhysicEngine::removeCollider(Collider* c)
 
 void kwee::PhysicEngine::update()
 {
-	LARGE_INTEGER time;
-	QueryPerformanceCounter(&time);
-	
-	delta = ((double)(time.QuadPart / (freq / 10000) - lastUpdateTime / (freq / 10000)) + 1) / 10000.0;
-	lastUpdateTime = time.QuadPart / (freq / 10000);
+	delta = ((double) (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - lastUpdateTime)).count() / 100);
+	lastUpdateTime = std::chrono::high_resolution_clock::now();
+
 
 	kwee::Camera* cam = Application::getInstance()->getScene()->getCamera();
 	glm::vec2 mousePos = cam->ScreenToWorld(Input::getMousePosition());
@@ -126,8 +116,6 @@ void kwee::PhysicEngine::update()
 			}
 		}
 	}
-
-	lastUpdateTime = time.QuadPart;
 }
 
 void kwee::PhysicEngine::removeRequiedObjects()
@@ -200,10 +188,10 @@ bool kwee::PhysicEngine::cross(float x1, float y1, float x2, float y2, float x3,
 	dot.x = x3 + (x4 - x3) * n;
 	dot.y = y3 + (y4 - y3) * n;
 
-	if (((dot.x >= min(x1, x2) && dot.x <= max(x1, x2)) &&
-		 (dot.y >= min(y1, y2) && dot.y <= max(y1, y2))) &&
-		((dot.x >= min(x3, x4) && dot.x <= max(x3, x4)) &&
-		 (dot.y >= min(y3, y4) && dot.y <= max(y3, y4))))		return true;
+	if (((dot.x >= std::min(x1, x2) && dot.x <= std::max(x1, x2)) &&
+		 (dot.y >= std::min(y1, y2) && dot.y <= std::max(y1, y2))) &&
+		((dot.x >= std::min(x3, x4) && dot.x <= std::max(x3, x4)) &&
+		 (dot.y >= std::min(y3, y4) && dot.y <= std::max(y3, y4))))		return true;
 
 	return false;
 }
@@ -220,5 +208,5 @@ double kwee::PhysicEngine::getDelta()
 
 long long int kwee::PhysicEngine::millis()
 {
-	return lastUpdateTime / 10000;
+	return 0;
 }
