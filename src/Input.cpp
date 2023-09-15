@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <iostream>
+#include <cstring>
 
 bool kwee::Input::key[512] = { 0 };
 bool kwee::Input::key_up[512] = { 0 };

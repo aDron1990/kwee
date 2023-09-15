@@ -57,7 +57,7 @@ namespace kwee
 
 		static void removeRequiedObjects();
 
-		static std::chrono::steady_clock::time_point lastUpdateTime;
+		static std::chrono::high_resolution_clock::time_point lastUpdateTime;
 		static double delta;
 		static long long milli;
 
