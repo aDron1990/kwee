@@ -1,4 +1,0 @@
---onMouseHover in collider--
---standart shaders (collider, colored, textured)--
---textures--
-
