@@ -10,7 +10,7 @@
 
 std::vector<kwee::Collider*> kwee::PhysicEngine::colliders_ = std::vector<kwee::Collider*>();
 std::vector<int>  kwee::PhysicEngine::requiedToRemoveCollidersIds_ = std::vector<int>();
-std::chrono::steady_clock::time_point kwee::PhysicEngine::lastUpdateTime = std::chrono::steady_clock::time_point();
+std::chrono::high_resolution_clock::time_point kwee::PhysicEngine::lastUpdateTime = std::chrono::high_resolution_clock::time_point();
 double kwee::PhysicEngine::delta = 0;
 
 void kwee::PhysicEngine::initialize()

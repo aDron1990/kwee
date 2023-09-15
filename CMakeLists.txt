@@ -16,6 +16,6 @@ include_directories(include/)
 file(GLOB_RECURSE sources "src/*.cpp" "src/*.c" "src/*.h" "include/*.hpp" "include/*.h")
 
 add_compile_definitions(KWEE_BUILD)
-add_library(${PROJECT_NAME} SHARED ${sources})
-target_link_libraries(${PROJECT_NAME} OpenGL::GL glfw stb_image glm glad)
+add_library(${PROJECT_NAME} STATIC ${sources})
+target_link_libraries(${PROJECT_NAME} glfw stb_image glm glad)
 target_include_directories(${PROJECT_NAME} PUBLIC include/)
