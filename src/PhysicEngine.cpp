@@ -12,10 +12,14 @@ std::vector<kwee::Collider*> kwee::PhysicEngine::colliders_ = std::vector<kwee::
 std::vector<int>  kwee::PhysicEngine::requiedToRemoveCollidersIds_ = std::vector<int>();
 std::chrono::steady_clock::time_point kwee::PhysicEngine::lastUpdateTime = std::chrono::steady_clock::time_point();
 double kwee::PhysicEngine::delta = 0;
+long long kwee::PhysicEngine::milli = 0;
 
 void kwee::PhysicEngine::initialize()
 {
     lastUpdateTime = std::chrono::high_resolution_clock::now();
+	auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(lastUpdateTime);
+	auto value = std::chrono::duration_cast<std::chrono::milliseconds>(now_ms.time_since_epoch());
+	milli = value.count();
 }
 
 void kwee::PhysicEngine::addCollider(Collider* c)
@@ -38,6 +42,9 @@ void kwee::PhysicEngine::update()
 {
 	delta = ((double) (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - lastUpdateTime)).count() / 100);
 	lastUpdateTime = std::chrono::high_resolution_clock::now();
+	auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(lastUpdateTime);
+	auto value = std::chrono::duration_cast<std::chrono::milliseconds>(now_ms.time_since_epoch());
+	milli = value.count();
 
 
 	kwee::Camera* cam = Application::getInstance()->getScene()->getCamera();
@@ -208,5 +215,5 @@ double kwee::PhysicEngine::getDelta()
 
 long long int kwee::PhysicEngine::millis()
 {
-	return 0;
+	return milli;
 }

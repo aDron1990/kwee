@@ -59,6 +59,7 @@ namespace kwee
 
 		static std::chrono::steady_clock::time_point lastUpdateTime;
 		static double delta;
+		static long long milli;
 
 	public:
 
