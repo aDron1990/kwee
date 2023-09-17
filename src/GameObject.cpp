@@ -9,7 +9,6 @@ kwee::GameObject::GameObject(Color color) : color(color)
 	mesh_ = ResourceManager::getMesh();
 	shader_ = ResourceManager::getShader("colored");
 	textured_ = false;
-	std::cout << "GameObject()" << std::endl;
 	owner_ = 0;
 }
 

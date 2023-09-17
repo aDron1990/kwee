@@ -23,7 +23,6 @@ void kwee::Scene::draw()
 	glClearColor(background.red, background.green, background.blue, 1.0);
 	glm::mat4 viewMatrix = mainCamera->getViewMatrix();
 	glm::mat4 projectionMatrix = mainCamera->getProjectionMatrix();
-//	std::cout << objects_.size() << std::endl;
 	for (int i = 0; i < objects_.size(); i++)
 	{
 		objects_[i]->draw(viewMatrix, projectionMatrix);
