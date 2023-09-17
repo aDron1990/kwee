@@ -54,33 +54,45 @@ void kwee::PhysicEngine::update()
 
 	for (int i = 0; i < colliders_.size(); i++)
 	{
+		auto io = ImGui::GetIO();
 		if (colliders_[i]->mouseSupport_)
 		{
-			Collider* c1 = colliders_[i];
-			Rect rect;
-			glm::mat4 tr = c1->owner_->getTransformMatrix();
-
-			rect.v11 = tr * glm::vec4(c1->vertices_[0], c1->vertices_[1], 0.0f, 1.0f);
-			rect.v12 = tr * glm::vec4(c1->vertices_[2], c1->vertices_[3], 0.0f, 1.0f);
-			rect.v21 = tr * glm::vec4(c1->vertices_[4], c1->vertices_[5], 0.0f, 1.0f);
-			rect.v22 = tr * glm::vec4(c1->vertices_[6], c1->vertices_[7], 0.0f, 1.0f);
-
-			float
-				p1 = product(mousePos.x, mousePos.y, rect[0].x, rect[0].y, rect[1].x, rect[1].y),
-				p2 = product(mousePos.x, mousePos.y, rect[1].x, rect[1].y, rect[2].x, rect[2].y),
-				p3 = product(mousePos.x, mousePos.y, rect[2].x, rect[2].y, rect[3].x, rect[3].y),
-				p4 = product(mousePos.x, mousePos.y, rect[3].x, rect[3].y, rect[0].x, rect[0].y);
-
-			if ((p1 < 0 && p2 < 0 && p3 < 0 && p4 < 0) ||
-				(p1 > 0 && p2 > 0 && p3 > 0 && p4 > 0))
+			if (!io.WantCaptureMouse)
 			{
-				if (colliders_[i]->lastUpdateHaveMouseHover == false)
-				{
-					colliders_[i]->onMouseHoverEnter();
-				}
+				Collider* c1 = colliders_[i];
+				Rect rect;
+				glm::mat4 tr = c1->owner_->getTransformMatrix();
 
-				colliders_[i]->onMouseHover();
-				colliders_[i]->lastUpdateHaveMouseHover = true;
+				rect.v11 = tr * glm::vec4(c1->vertices_[0], c1->vertices_[1], 0.0f, 1.0f);
+				rect.v12 = tr * glm::vec4(c1->vertices_[2], c1->vertices_[3], 0.0f, 1.0f);
+				rect.v21 = tr * glm::vec4(c1->vertices_[4], c1->vertices_[5], 0.0f, 1.0f);
+				rect.v22 = tr * glm::vec4(c1->vertices_[6], c1->vertices_[7], 0.0f, 1.0f);
+
+				float
+					p1 = product(mousePos.x, mousePos.y, rect[0].x, rect[0].y, rect[1].x, rect[1].y),
+					p2 = product(mousePos.x, mousePos.y, rect[1].x, rect[1].y, rect[2].x, rect[2].y),
+					p3 = product(mousePos.x, mousePos.y, rect[2].x, rect[2].y, rect[3].x, rect[3].y),
+					p4 = product(mousePos.x, mousePos.y, rect[3].x, rect[3].y, rect[0].x, rect[0].y);
+
+				if ((p1 < 0 && p2 < 0 && p3 < 0 && p4 < 0) ||
+					(p1 > 0 && p2 > 0 && p3 > 0 && p4 > 0))
+				{
+					if (colliders_[i]->lastUpdateHaveMouseHover == false)
+					{
+						colliders_[i]->onMouseHoverEnter();
+					}
+
+					colliders_[i]->onMouseHover();
+					colliders_[i]->lastUpdateHaveMouseHover = true;
+				}
+				else
+				{
+					if (colliders_[i]->lastUpdateHaveMouseHover == true)
+					{
+						colliders_[i]->onMouseHoverExit();
+						colliders_[i]->lastUpdateHaveMouseHover = false;
+					}
+				}
 			}
 			else
 			{

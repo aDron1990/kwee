@@ -6,6 +6,9 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 namespace kwee
 {
@@ -24,9 +27,7 @@ namespace kwee
 
 	public:
 
-
 		GLuint vbo_, vao_, ebo_;
-
 
 		Application(glm::vec2 windowSize, std::string windowName, bool allocConsole);
 		virtual ~Application();
@@ -36,6 +37,7 @@ namespace kwee
 		void loadScene(Scene* scene);
 		void render();
 
+		virtual void drawUI() {};
 		virtual void update() {};
 		virtual void onWindowClose() {};
 
