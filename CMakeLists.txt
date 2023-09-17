@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(kwee)
+project(kwee VERSION 0.1)
 
 find_package(OpenGL REQUIRED)
 
