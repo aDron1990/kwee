@@ -1,0 +1,9 @@
+{
+    "git.ignoreLimitWarning": true,
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+        "algorithm": "cpp",
+        "iostream": "cpp",
+        "ctime": "cpp"
+    }
+}

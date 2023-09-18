@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/include/",
+                "${workspaceFolder}/3th_party/glad/include/",
+                "${workspaceFolder}/3th_party/glfw/include/",
+                "${workspaceFolder}/3th_party/glm/",
+                "${workspaceFolder}/3th_party/stb_image/include/"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "KWEE_BUILD"
+            ],
+            "windowsSdkVersion": "10.0.22621.0",
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}
