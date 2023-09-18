@@ -15,7 +15,9 @@ kwee::Application::Application(glm::vec2 windowSize, std::string windowName, boo
 	instance_ = this;
 	if(glfwInit() == 0) throw;
 
-	//glfwWindowHint(GLFW_RESIZABLE, false);
+#ifndef _WIN32
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_FALSE);
+#endif
 
 	window = glfwCreateWindow(windowSize_.x, windowSize_.y, windowName.c_str(), nullptr, nullptr);
 	if (window == 0) throw;
@@ -79,7 +81,11 @@ void kwee::Application::run()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+#ifdef _WIN32
 		glfwSwapBuffers(window);
+#else
+        glFlush();
+#endif
 
 		Input::update();
 	}
