@@ -4,10 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/include/",
-                "${workspaceFolder}/3th_party/glad/include/",
-                "${workspaceFolder}/3th_party/glfw/include/",
-                "${workspaceFolder}/3th_party/glm/",
-                "${workspaceFolder}/3th_party/stb_image/include/"
+                "${workspaceFolder}/**",
+                "~/.conan2/p/**"
             ],
             "defines": [
                 "_DEBUG",
