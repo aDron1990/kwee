@@ -1,13 +1,13 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.20)
 
 project(kwee VERSION 0.1.1)
 
 find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-add_subdirectory(3th_party/glfw)
 add_subdirectory(3th_party/stb_image)
 add_subdirectory(3th_party/glm)
 add_subdirectory(3th_party/glad)
